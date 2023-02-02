@@ -1,0 +1,13 @@
+# ide
+.idea
+.vscode
+
+# virtual env
+.venv
+
+# pyenv
+.python-version
+
+# python
+*.pyc
+__pycache__
