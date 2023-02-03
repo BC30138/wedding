@@ -1,7 +1,8 @@
 import importlib
 import pkgutil
 
-def import_submodules(package, recursive=True):
+
+def import_sqlalchemy_models(package):
     """ Import all submodules of a module, recursively, including subpackages
 
     :param package: package (name or actual module)
@@ -13,7 +14,8 @@ def import_submodules(package, recursive=True):
     results = {}
     for loader, name, is_pkg in pkgutil.walk_packages(package.__path__):
         full_name = package.__name__ + '.' + name
-        results[full_name] = importlib.import_module(full_name)
-        if recursive and is_pkg:
-            results.update(import_submodules(full_name))
+        if is_pkg:
+            results.update(import_sqlalchemy_models(full_name))
+        elif name == "models":
+            results[full_name] = importlib.import_module(full_name)
     return results
