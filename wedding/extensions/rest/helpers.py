@@ -5,6 +5,8 @@ from typing import Type, Any
 from fastapi.responses import JSONResponse
 from fastapi import Request
 from pydantic import BaseModel
+from pydantic.main import create_model
+from pydantic.schema import get_model_name_map
 
 from wedding.ctx.general_errors import DomainError
 
@@ -21,12 +23,19 @@ class BaseResponseSchema(BaseModel):
 
 
 class ResponseGenerator:
-    @staticmethod
-    def success_schema(schema: Type[BaseModel]) -> Type[BaseResponseSchema]:
-        class Schema(BaseResponseSchema):
-            data: schema
+    created_models = {}
 
-        return Schema
+    @classmethod
+    def success_schema(cls, schema: Type[BaseModel]) -> Type[BaseResponseSchema]:
+        model_name = f"{schema.__name__}Success"
+        if model_name not in cls.created_models:
+            created_model = create_model(
+                model_name,
+                data=(schema, ...),
+                status=(str, ...),
+            )
+            cls.created_models[model_name] = created_model
+        return cls.created_models[model_name]
 
     @classmethod
     def success(cls, data: Any = None) -> BaseResponseSchema:

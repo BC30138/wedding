@@ -9,5 +9,5 @@ class GetGroupUseCase:
         self._groups_service = groups_service
 
     async def execute(self, group_id: int) -> GroupEntity:
-        group = await self._groups_service.get_group_by_id(group_id=group_id)
+        group = await self._groups_service.get_group_by(group_id=group_id)
         return group

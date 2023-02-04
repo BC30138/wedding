@@ -10,8 +10,8 @@ from wedding.extensions.store.utils.utils import import_sqlalchemy_models
 Base = declarative_base()
 import_sqlalchemy_models(repo)
 
-engine = create_async_engine(app_configuration.database_url)
-async_session = sessionmaker(
+engine = create_async_engine(app_configuration.async_database_url)
+async_session = sessionmaker(  # noqa
     engine,
     class_=AsyncSession,
     expire_on_commit=False

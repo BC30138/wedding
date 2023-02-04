@@ -1,10 +1,12 @@
+"""Сущность группы гостей."""
 from dataclasses import dataclass
-
-from wedding.ctx.guests.entity.guest import GuestEntity
 
 
 @dataclass
 class GroupEntity:
-    id: int
     name: str
-    guests: list[GuestEntity]
+    guest_1_id: int | None
+    guest_2_id: int | None
+    id: int = None
+    sleep_place: bool = True
+    finalize: bool = False

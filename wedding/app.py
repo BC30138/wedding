@@ -1,4 +1,5 @@
 """Точка запуска приложения."""
+import uvicorn
 from fastapi import FastAPI
 
 # Инициация конфигурации
@@ -21,3 +22,6 @@ def setup_app():
     return app
 
 app = setup_app()
+
+if __name__ == "__main__":
+    uvicorn.run("wedding.app:app", host="0.0.0.0", port=8000)

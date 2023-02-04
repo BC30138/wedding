@@ -12,8 +12,6 @@ class Guests(Base):
     last_name = Column(String)
     group_id = Column(Integer, ForeignKey("groups.id"))
 
-    group = relationship("Groups", back_populates="guests")
-
     def to_entity(self) -> GuestEntity:
         return GuestEntity(
             id=self.id,
