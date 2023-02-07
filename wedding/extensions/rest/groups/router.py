@@ -1,4 +1,4 @@
-"""API для работы с пользователями"""
+"""API для работы с группами гостей"""
 from http import HTTPStatus
 
 from fastapi import APIRouter, Depends

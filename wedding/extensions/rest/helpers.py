@@ -26,7 +26,10 @@ class ResponseGenerator:
     created_models = {}
 
     @classmethod
-    def success_schema(cls, schema: Type[BaseModel]) -> Type[BaseResponseSchema]:
+    def success_schema(
+        cls,
+        schema: Type[BaseModel] | list[Type[BaseModel]],
+    ) -> Type[BaseResponseSchema]:
         model_name = f"{schema.__name__}Success"
         if model_name not in cls.created_models:
             created_model = create_model(
