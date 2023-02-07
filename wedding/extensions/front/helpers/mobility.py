@@ -4,10 +4,21 @@ from functools import wraps
 from fastapi import Request
 
 
+MOBILE_TEMPLATE_DIRECTORY = "mobile"
+WEB_TEMPLATE_DIRECTORY = "web"
+
+
 class MobilityRequest(Request):
     @property
     def is_mobile(self):
         return self.is_mobile
+
+
+def mobile_template_parser(request: MobilityRequest, template_name: str) -> str:
+    if request.is_mobile:
+        return f"{MOBILE_TEMPLATE_DIRECTORY}/{template_name}"
+    else:
+        return f"{WEB_TEMPLATE_DIRECTORY}/{template_name}"
 
 
 class MobilityManager:
