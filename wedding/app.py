@@ -8,6 +8,7 @@ from wedding.cfg import app_configuration  # noqa
 
 from wedding.extensions.rest.groups.router import router as groups_router
 from wedding.extensions.rest.guests.router import router as guests_router
+from wedding.extensions.front.router import router as front_router
 from wedding.extensions.rest.helpers import internal_error_exception_handler
 
 
@@ -25,6 +26,9 @@ def setup_app():
     app.include_router(
         router=guests_router,
         prefix="/guests",
+    )
+    app.include_router(
+        router=front_router,
     )
 
     return app
