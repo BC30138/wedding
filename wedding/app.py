@@ -1,6 +1,7 @@
 """Точка запуска приложения."""
 import uvicorn
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 # Инициация конфигурации
 from wedding.cfg import app_configuration  # noqa
@@ -15,6 +16,8 @@ def setup_app():
         docs_url="/swagger",
         exception_handlers={Exception: internal_error_exception_handler}
     )
+    app.mount("/static", StaticFiles(directory="wedding/extensions/front/static"), name="static")
+
     app.include_router(
         router=groups_router,
         prefix="/groups",
