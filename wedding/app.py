@@ -29,6 +29,7 @@ def setup_app():
     )
     app.include_router(
         router=front_router,
+        prefix="/public"
     )
 
     return app

@@ -10,6 +10,7 @@ class GuestDataSchema(BaseModel):
     middle_name: str
     last_name: str
     group_id: int
+    male: str
 
     def to_dto(self) -> GuestData:
         return GuestData(
@@ -17,6 +18,7 @@ class GuestDataSchema(BaseModel):
             middle_name=self.middle_name,
             last_name=self.last_name,
             group_id=self.group_id,
+            male=self.male,
         )
 
 
@@ -31,4 +33,5 @@ class GuestSchema(GuestDataSchema):
             middle_name=entity.middle_name,
             last_name=entity.last_name,
             group_id=entity.group_id,
+            male=entity.male.value,
         )

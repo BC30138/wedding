@@ -1,12 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "/web/base.html" %}
+{% block head %}
+{{ super() }}
+<link rel='stylesheet' href="{{ url_for('static', path='/css/web/invitation.css') }}">
+{% endblock %}
 
-THIS IS WEB
+{% block content %}
 
-</body>
-</html>
+<img src="{{ url_for('static', path='/img/collage.png') }}" class="main-release-photo">
+
+<div class="greeting">
+    <p class="appeal">
+        {% if group.male.value == "they" %}
+            Дорогие
+        {% elif group.male.value == "male" %}
+            Дорогой
+        {% else %}
+            Дорогая
+        {% endif %}
+    </p>
+    <div class="guests">
+        <p class="guests.unit">
+            {{ group.guest_1.full_name }}
+        </p>
+        {% if group.male.value == "they" %}
+            <p> и </p>
+            <p class="guests.unit">
+                {{ group.guest_2.full_name }}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="invite">
+    <p>С радостью приглашаем вас на свадьбу</p>
+    <div class="family">
+        <p class="family.unit">Екатерины</p>
+        <p>и</p>
+        <p class="family.unit">Антона</p>
+    </div>
+</div>
+
+{% endblock %}

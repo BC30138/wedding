@@ -1,0 +1,20 @@
+p {
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.guests * {
+    font-family: "french_kiss";
+    font-size: 80px;
+    margin: -20px 0px;
+}
+
+.family * {
+    font-family: "french_kiss";
+    font-size: 140px;
+    margin: -20px 0px;
+}

@@ -7,3 +7,4 @@ class GuestData:
     middle_name: str
     last_name: str
     group_id: int
+    male: str

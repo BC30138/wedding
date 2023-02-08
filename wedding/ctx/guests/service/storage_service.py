@@ -2,7 +2,7 @@ from fastapi import Depends
 
 from wedding.ctx import GuestNotFoundError
 from wedding.ctx.guests.dto.data import GuestData
-from wedding.ctx.guests.entity.guest import GuestEntity
+from wedding.ctx.guests.entity.guest import GuestEntity, MaleEnum
 from wedding.extensions.store.repo.guests.models import Guests
 from wedding.extensions.store.repo.guests.repo import GuestsRepo
 
@@ -18,6 +18,7 @@ class StorageService:
             middle_name=guest_data.middle_name,
             last_name=guest_data.last_name,
             group_id=guest_data.group_id,
+            male=MaleEnum(guest_data.male),
         )
 
     @staticmethod
@@ -27,6 +28,7 @@ class StorageService:
             middle_name=entity.middle_name,
             last_name=entity.last_name,
             group_id=entity.group_id,
+            male=entity.male.value,
         )
 
     async def get_guest_list_by(

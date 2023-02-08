@@ -17,4 +17,10 @@ async def get_invitation(
 ):
     template_name = mobile_template_parser(request=request, template_name="invitation.html")
     group = await group_service.get_group(group_id=group_id)
-    return templates_storage.TemplateResponse(template_name, {"request": request, "group": group})
+    return templates_storage.TemplateResponse(
+        template_name,
+        {
+            "request": request,
+            "group": group,
+        }
+    )

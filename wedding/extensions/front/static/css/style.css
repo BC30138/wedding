@@ -1,0 +1,33 @@
+@font-face {
+  font-family:"french_kiss";
+  src: url("/static/fonts/french_kiss.ttf") format("truetype");
+}
+
+@font-face {
+  font-family:"comfortaa";
+  src: url("/static/fonts/comfortaa.ttf") format("truetype");
+}
+
+* {
+  font-family: "comfortaa";
+  color: #000000;
+  font-size: 20px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  backdrop-filter: blur(5px);
+  background-image:    url(../img/background.png);
+  background-color: rgb(255, 255, 255);
+  background-size:     cover;
+  background-repeat:   repeat-y;
+  background-position: center center;
+  background-attachment:fixed;
+}
