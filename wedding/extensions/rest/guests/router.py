@@ -7,12 +7,25 @@ from wedding.ctx.groups.errors import GroupNotFoundError
 from wedding.ctx.groups.handler.create_group_handler import CreateGroupHandler
 from wedding.ctx.groups.handler.get_group_handler import GetGroupHandler
 from wedding.ctx.guests.handler.create_guest_handler import CreateGuestHandler
+from wedding.ctx.guests.handler.get_guest_handler import GetGuestHandler
 from wedding.ctx.guests.handler.get_guest_list_handler import GetGuestListHandler
 from wedding.extensions.rest.groups.schema import GroupSchema, GroupDataSchema
 from wedding.extensions.rest.guests.schema import GuestSchema, GuestDataSchema
 from wedding.extensions.rest.helpers import ResponseGenerator
 
 router = APIRouter(tags=["guests"])
+
+
+@router.get(
+    "/{guest_id}",
+    response_model=ResponseGenerator.success_schema(GuestSchema)
+)
+async def get_guest(
+    guest_id: int,
+    handler: GetGuestHandler = Depends(GetGuestHandler),
+):
+    guests = await handler.get_by_return_schema(guest_id=guest_id)
+    return ResponseGenerator.success(data=guests)
 
 
 @router.get(

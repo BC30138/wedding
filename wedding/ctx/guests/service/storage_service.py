@@ -1,5 +1,6 @@
 from fastapi import Depends
 
+from wedding.ctx import GuestNotFoundError
 from wedding.ctx.guests.dto.data import GuestData
 from wedding.ctx.guests.entity.guest import GuestEntity
 from wedding.extensions.store.repo.guests.models import Guests
@@ -36,6 +37,15 @@ class StorageService:
             group_id=group_id,
         )
         return [guest_model.to_entity() for guest_model in guest_models]
+
+    async def get_guest_by_id(
+        self,
+        guest_id: int,
+    ) -> GuestEntity:
+        guest_model = await self._guests_repo.load_one(guest_id=guest_id)
+        if guest_model is None:
+            raise GuestNotFoundError(f"Guest with id {guest_id} not found")
+        return guest_model.to_entity()
 
     async def create_guest(self, guest_data: GuestData):
         guest_entity = self.create_guest_entity(guest_data=guest_data)
