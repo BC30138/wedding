@@ -5,8 +5,13 @@
 {% endblock %}
 
 {% block content %}
+<div class="collage">
+    <img src="{{ url_for('static', path='/img/collage.png') }}" >
+</div>
 
-<img src="{{ url_for('static', path='/img/collage.png') }}" class="main-release-photo">
+<div class="paragraph p_open">
+    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+</div>
 
 <div class="greeting">
     <p class="appeal">
@@ -31,6 +36,10 @@
     </div>
 </div>
 
+<div class="paragraph p_close">
+    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+</div>
+
 <div class="invite">
     <p>С радостью приглашаем вас на свадьбу</p>
     <div class="family">
@@ -38,6 +47,43 @@
         <p>и</p>
         <p class="family.unit">Антона</p>
     </div>
+    <p class="wedding-date"> 15 июня </p>
 </div>
 
+<div class="paragraph p_open">
+    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+</div>
+
+<div class="schedule">
+    <div class="schedule-part">
+        <p class="timing"> 11:40 </p>
+        <p>Торжественная регистрация</p>
+        <a class="address" href="https://go.2gis.com/qbj8u4" target="_blank">
+            <p>Дворец бракосочетания №2</p>
+            <p>Санкт-Петербург, ул. Фурштатская, д. 52</p>
+        </a>
+    </div>
+    <div class="schedule-part">
+        <p class="timing"> 15:00 </p>
+        <p> Трансфер от ЗАГСа до места проведения банкета</p>
+    </div>
+    <div class="schedule-part">
+        <p class="timing"> 16:00 </p>
+        <p>Праздничный банкет</p>
+        <a class="address" href="https://go.2gis.com/rtlgy" target="_blank">
+            <p>Загородный клуб "Иваново подворье"</p>
+            <p>пос. Токсово, ул. Разъезжая, д. 13</p>
+        </a>
+    </div>
+</div>
+
+<div class="paragraph p_close">
+    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+</div>
+
+<div class="yandex_form">
+    <script src="https://yastatic.net/s3/frontend/forms/_/embed.js"></script>
+    <iframe src="https://forms.yandex.ru/cloud/{{ group.form_id.value }}/?iframe=1"
+            frameborder="0" name="ya-form-63e51085e010db03fcf56c23" width="650"></iframe>
+</div>
 {% endblock %}

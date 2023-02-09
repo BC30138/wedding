@@ -2,6 +2,11 @@ from dataclasses import dataclass
 from enum import Enum
 
 
+class FormIdEnum(Enum):
+    single = "63e515aceb614604b18159a1"
+    couple = "63e51085e010db03fcf56c23"
+
+
 class GuestMaleEnum(Enum):
     male = "male"
     female = "female"
@@ -62,3 +67,10 @@ class GroupInfo:
             return GuestMaleEnum.they
         else:
             return GuestMaleEnum(self.guest_1.male.value)
+
+    @property
+    def form_id(self) -> FormIdEnum:
+        if self.male is GuestMaleEnum.they:
+            return FormIdEnum.couple
+        else:
+            return FormIdEnum.single
