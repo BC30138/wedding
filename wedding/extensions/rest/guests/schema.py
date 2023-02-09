@@ -7,7 +7,7 @@ from wedding.ctx.guests.entity.guest import GuestEntity
 
 class GuestDataSchema(BaseModel):
     first_name: str
-    middle_name: str
+    middle_name: str | None
     last_name: str
     group_id: int
     male: str
