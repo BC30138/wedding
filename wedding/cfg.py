@@ -1,3 +1,4 @@
+import os
 from urllib.parse import urlparse
 from dataclasses import dataclass
 from dotenv import dotenv_values
@@ -11,6 +12,8 @@ class AppConfiguration:
 
 def make_app_configuration():
     env_content = dotenv_values(DOTENV_PATH)
+    if not env_content:
+        env_content = os.environ
 
     database_url = urlparse(env_content["DATABASE_URL"])
     async_database_url = database_url._replace(scheme='postgresql+asyncpg')

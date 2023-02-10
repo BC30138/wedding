@@ -1,7 +1,9 @@
+version: "3"
+
 services:
   db:
     image: postgres:14
-    container_name: wedding.db
+    container_name: weddingdb
     expose:
       - "5432"
     ports:
@@ -10,6 +12,27 @@ services:
       - .env
     volumes:
       - ./dbdata:/var/lib/postgresql/data
+    networks:
+      - bc30138-net
+
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - bc30138-net
 
 networks:
   bc30138-net:

@@ -53,7 +53,7 @@ class GroupInfo:
     def pronoun(self) -> GroupPronounEnum:
         if self.is_couple:
             return GroupPronounEnum.they
-        elif self.guest_1 == "male":
+        elif self.guest_1.male == "male":
             return GroupPronounEnum.he
         else:
             return GroupPronounEnum.she
