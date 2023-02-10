@@ -17,16 +17,12 @@ class GroupsService:
             name=group_data.name,
             guest_1_id=group_data.guest_1_id,
             guest_2_id=group_data.guest_2_id,
-            sleep_place=group_data.sleep_place,
-            finalize=group_data.finalize,
         )
 
     @staticmethod
     def group_entity_to_model(entity: GroupEntity) -> Groups:
         return Groups(
             name=entity.name,
-            sleep_place=entity.sleep_place,
-            finalize=entity.finalize,
             guest_1_id=entity.guest_1_id,
             guest_2_id=entity.guest_2_id,
         )

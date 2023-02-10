@@ -15,9 +15,9 @@
 
 <div class="greeting">
     <p class="appeal">
-        {% if group.male.value == "they" %}
+        {% if group.pronoun.value == "they" %}
             Дорогие
-        {% elif group.male.value == "male" %}
+        {% elif group.pronoun.value == "he" %}
             Дорогой
         {% else %}
             Дорогая
@@ -27,7 +27,7 @@
         <p class="guests.unit">
             {{ group.guest_1.full_name }}
         </p>
-        {% if group.male.value == "they" %}
+        {% if group.is_couple %}
             <p> и </p>
             <p class="guests.unit">
                 {{ group.guest_2.full_name }}
@@ -57,22 +57,28 @@
 <div class="schedule">
     <div class="schedule-part">
         <p class="timing"> 11:40 </p>
-        <p>Торжественная регистрация</p>
+        <p class="schedule-title">Торжественная регистрация</p>
         <a class="address" href="https://go.2gis.com/qbj8u4" target="_blank">
-            <p>Дворец бракосочетания №2</p>
-            <p>Санкт-Петербург, ул. Фурштатская, д. 52</p>
+            <img src="{{ url_for('static', path='/img/location.svg') }}" >
+            <div class="address-text">
+                <p>Дворец бракосочетания №2</p>
+                <p>Санкт-Петербург, ул. Фурштатская, д. 52</p>
+            </div>
         </a>
     </div>
     <div class="schedule-part">
         <p class="timing"> 15:00 </p>
-        <p> Трансфер от ЗАГСа до места проведения банкета</p>
+        <p class="schedule-title"> Трансфер от ЗАГСа до места проведения банкета</p>
     </div>
     <div class="schedule-part">
         <p class="timing"> 16:00 </p>
-        <p>Праздничный банкет</p>
+        <p class="schedule-title">Праздничный банкет</p>
         <a class="address" href="https://go.2gis.com/rtlgy" target="_blank">
-            <p>Загородный клуб "Иваново подворье"</p>
-            <p>пос. Токсово, ул. Разъезжая, д. 13</p>
+            <img src="{{ url_for('static', path='/img/location.svg') }}" >
+            <div class="address-text">
+                <p>Загородный клуб "Иваново подворье"</p>
+                <p>пос. Токсово, ул. Разъезжая, д. 13</p>
+            </div>
         </a>
     </div>
 </div>
@@ -83,7 +89,7 @@
 
 <div class="yandex_form">
     <script src="https://yastatic.net/s3/frontend/forms/_/embed.js"></script>
-    <iframe src="https://forms.yandex.ru/cloud/{{ group.form_id.value }}/?iframe=1"
+    <iframe src="https://forms.yandex.ru/u/{{ group.form_id }}/?iframe=1"
             frameborder="0" name="ya-form-63e51085e010db03fcf56c23" width="650"></iframe>
 </div>
 {% endblock %}

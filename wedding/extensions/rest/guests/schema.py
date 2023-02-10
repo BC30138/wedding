@@ -24,6 +24,7 @@ class GuestDataSchema(BaseModel):
 
 class GuestSchema(GuestDataSchema):
     id: int
+    full_name: str
 
     @classmethod
     def from_entity(cls, entity: GuestEntity) -> "GuestSchema":
@@ -34,4 +35,5 @@ class GuestSchema(GuestDataSchema):
             last_name=entity.last_name,
             group_id=entity.group_id,
             male=entity.male.value,
+            full_name=entity.full_name,
         )

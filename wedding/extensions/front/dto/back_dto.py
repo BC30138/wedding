@@ -2,50 +2,36 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-class FormIdEnum(Enum):
-    single = "63e515aceb614604b18159a1"
-    couple = "63e51085e010db03fcf56c23"
-
-
-class GuestMaleEnum(Enum):
-    male = "male"
-    female = "female"
+class GroupPronounEnum(Enum):
+    he = "he"
+    she = "she"
     they = "they"
 
 
 @dataclass
 class GuestInfo:
-    first_name: str
-    middle_name: str
-    last_name: str
-    male: GuestMaleEnum
+    full_name: str
+    male: str
     id: int = None
 
     @classmethod
     def from_json(cls, json_data: dict) -> "GuestInfo":
         return cls(
-            first_name=json_data["first_name"],
-            middle_name=json_data["middle_name"],
-            last_name=json_data["last_name"],
-            male=GuestMaleEnum(json_data["male"]),
+            full_name=json_data["full_name"],
+            male=json_data["male"],
             id=json_data["id"],
         )
-
-    @property
-    def full_name(self) -> str:
-        full_name_list = [self.last_name, self.first_name]
-        if self.middle_name:
-            full_name_list.append(self.middle_name)
-        return " ".join(full_name_list)
 
 
 @dataclass
 class GroupInfo:
     id: int
     name: str
+    is_couple: bool
+    form_id: str
     guest_1: GuestInfo | None
     guest_2: GuestInfo | None
-    finalize: bool = False
+
 
     @classmethod
     def from_json(
@@ -59,18 +45,15 @@ class GroupInfo:
             name=json_data["name"],
             guest_1=guest_1,
             guest_2=guest_2,
+            is_couple=json_data["is_couple"],
+            form_id=json_data["form_id"]
         )
 
     @property
-    def male(self) -> GuestMaleEnum:
-        if self.guest_2:
-            return GuestMaleEnum.they
+    def pronoun(self) -> GroupPronounEnum:
+        if self.is_couple:
+            return GroupPronounEnum.they
+        elif self.guest_1 == "male":
+            return GroupPronounEnum.he
         else:
-            return GuestMaleEnum(self.guest_1.male.value)
-
-    @property
-    def form_id(self) -> FormIdEnum:
-        if self.male is GuestMaleEnum.they:
-            return FormIdEnum.couple
-        else:
-            return FormIdEnum.single
+            return GroupPronounEnum.she

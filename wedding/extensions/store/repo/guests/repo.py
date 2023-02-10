@@ -4,6 +4,8 @@ from sqlalchemy.sql.selectable import Select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from wedding.extensions.store.database import db_session
+from wedding.extensions.store.global_errors import ConstraintError
+from wedding.extensions.store.repo.guests.errors import GuestsConstraintError
 from wedding.extensions.store.repo.guests.models import Guests
 
 
@@ -39,4 +41,4 @@ class GuestsRepo:
             await self._db_session.commit()
             return guest
         except IntegrityError as exc:
-            print(exc.orig.__context__)
+            raise GuestsConstraintError(msg=str(exc)) from exc
