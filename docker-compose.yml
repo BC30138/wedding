@@ -11,18 +11,16 @@ services:
     env_file:
       - .env
     volumes:
-      - ./dbdata:/var/lib/postgresql/data
+      - /dbdata:/var/lib/postgresql/data
     networks:
-      - bc30138-net
+      - bc30138server_bc30138-net
 
-  web:
+  weddingweb:
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
     expose:
       - "8000"
-    ports:
-      - "8000:8000"
     env_file:
       - .env
     deploy:
@@ -32,8 +30,8 @@ services:
         max_attempts: 3
         window: 120s
     networks:
-      - bc30138-net
+      - bc30138server_bc30138-net
 
 networks:
-  bc30138-net:
-    driver: bridge
+  bc30138server_bc30138-net:
+    external: true
