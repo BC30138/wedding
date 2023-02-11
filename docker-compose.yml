@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./dbdata:/var/lib/postgresql/data
+      - /dbdata:/var/lib/postgresql/data
     networks:
       - bc30138server_bc30138-net
 
@@ -22,6 +22,8 @@ services:
       dockerfile: ./docker/web/Dockerfile
     expose:
       - "8000"
+    ports:
+      - "8000:8000"
     env_file:
       - .env
     restart: always
