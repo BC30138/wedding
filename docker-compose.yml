@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./dbdata:/var/lib/postgresql/data
+      - /dbdata:/var/lib/postgresql/data
     networks:
       - bc30138-net
 
