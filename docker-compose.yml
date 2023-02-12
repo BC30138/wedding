@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: postgres:14
+    image: postgres:14-alpine
     container_name: weddingdb
     expose:
       - "5432"
@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - /dbdata:/var/lib/postgresql/data
+      - ./dbdata:/var/lib/postgresql/data
     networks:
       - bc30138-net
 
