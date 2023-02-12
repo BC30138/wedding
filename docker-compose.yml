@@ -13,7 +13,7 @@ services:
     volumes:
       - /dbdata:/var/lib/postgresql/data
     networks:
-      - bc30138server_bc30138-net
+      - bc30138-server_bc30138-net
 
   weddingweb:
     container_name: weddingweb
@@ -30,8 +30,8 @@ services:
     depends_on:
       - db
     networks:
-      - bc30138server_bc30138-net
+      - bc30138-server_bc30138-net
 
 networks:
-  bc30138server_bc30138-net:
+  bc30138-server_bc30138-net:
     external: true
