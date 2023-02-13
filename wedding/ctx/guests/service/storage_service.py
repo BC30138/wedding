@@ -17,27 +17,23 @@ class StorageService:
             first_name=guest_data.first_name,
             middle_name=guest_data.middle_name,
             last_name=guest_data.last_name,
-            group_id=guest_data.group_id,
             male=MaleEnum(guest_data.male),
         )
 
     @staticmethod
     def guest_entity_to_model(entity: GuestEntity) -> Guests:
-        return Guests(
-            first_name=entity.first_name,
-            middle_name=entity.middle_name,
-            last_name=entity.last_name,
-            group_id=entity.group_id,
-            male=entity.male.value,
-        )
+        kwagrs = {
+            "first_name": entity.first_name,
+            "middle_name": entity.middle_name,
+            "last_name": entity.last_name,
+            "male": entity.male.value,
+        }
+        if entity.id:
+            kwagrs["id"] = entity.id
+        return Guests(**kwagrs)
 
-    async def get_guest_list_by(
-        self,
-        group_id: int | None = None,
-    ) -> list[GuestEntity]:
-        guest_models = await self._guests_repo.load(
-            group_id=group_id,
-        )
+    async def get_guest_list_by(self) -> list[GuestEntity]:
+        guest_models = await self._guests_repo.load()
         return [guest_model.to_entity() for guest_model in guest_models]
 
     async def get_guest_by_id(

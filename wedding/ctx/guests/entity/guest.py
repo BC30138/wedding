@@ -12,7 +12,6 @@ class GuestEntity:
     first_name: str
     middle_name: str
     last_name: str
-    group_id: int
     male: MaleEnum
     id: int = None
 

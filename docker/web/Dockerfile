@@ -22,7 +22,9 @@ COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY . /code
-COPY docker/web/entrypoint.sh entrypoint.sh
+COPY ./wedding /code/wedding
+COPY ./migration /code/migration
+COPY ./alembic.ini /code/alembic.ini
+COPY ./docker/web/entrypoint.sh /code/entrypoint.sh
 
 CMD ["./entrypoint.sh"]

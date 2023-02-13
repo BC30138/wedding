@@ -16,13 +16,10 @@ class GuestsRepo:
     def load_query(
         self,
         guest_id: int | None = None,
-        group_id: int | None = None,
     ) -> Select:
         query = select(Guests)
         if guest_id is not None:
             query = query.filter(Guests.id == guest_id)
-        if group_id is not None:
-            query = query.filter(Guests.group_id == group_id)
         return query
 
     async def load(self, **kwargs) -> list[Guests]:
