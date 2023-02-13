@@ -1,11 +1,11 @@
 @font-face {
   font-family:"french_kiss";
-  src: url("/static/fonts/french_kiss.ttf") format("truetype");
+  src: url("/public/static/fonts/french_kiss.ttf") format("truetype");
 }
 
 @font-face {
   font-family:"comfortaa";
-  src: url("/static/fonts/comfortaa.ttf") format("truetype");
+  src: url("/public/static/fonts/comfortaa.ttf") format("truetype");
 }
 
 * {

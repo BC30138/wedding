@@ -1,16 +1,16 @@
 {% extends "/web/base.html" %}
 {% block style %}
 {{ super() }}
-<link rel='stylesheet' href="/static/css/web/invitation.css">
+<link rel='stylesheet' href="/public/static/css/web/invitation.css">
 {% endblock %}
 
 {% block content %}
 <div class="collage">
-    <img src="{{ url_for('static', path='/img/collage.png') }}" >
+    <img src="/public/static/img/collage.png" >
 </div>
 
 <div class="paragraph p_open">
-    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+    <img src="/public/static/img/break_line.svg" >
 </div>
 
 <div class="greeting">
@@ -37,7 +37,7 @@
 </div>
 
 <div class="paragraph p_close">
-    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+    <img src="/public/static/img/break_line.svg" >
 </div>
 
 <div class="invite">
@@ -51,7 +51,7 @@
 </div>
 
 <div class="paragraph p_open">
-    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+    <img src="/public/static/img/break_line.svg" >
 </div>
 
 <div class="schedule">
@@ -59,7 +59,7 @@
         <p class="timing"> 11:40 </p>
         <p class="schedule-title">Торжественная регистрация</p>
         <a class="address" href="https://go.2gis.com/qbj8u4" target="_blank">
-            <img src="{{ url_for('static', path='/img/location.svg') }}" >
+            <img src="/public/static/img/location.svg" >
             <div class="address-text">
                 <p>Дворец бракосочетания №2</p>
                 <p>Санкт-Петербург, ул. Фурштатская, д. 52</p>
@@ -74,7 +74,7 @@
         <p class="timing"> 16:00 </p>
         <p class="schedule-title">Праздничный банкет</p>
         <a class="address" href="https://go.2gis.com/rtlgy" target="_blank">
-            <img src="{{ url_for('static', path='/img/location.svg') }}" >
+            <img src="/public/static/img/location.svg" >
             <div class="address-text">
                 <p>Загородный клуб "Иваново подворье"</p>
                 <p>пос. Токсово, ул. Разъезжая, д. 13</p>
@@ -84,7 +84,7 @@
 </div>
 
 <div class="paragraph p_close">
-    <img src="{{ url_for('static', path='/img/break_line.svg') }}" >
+    <img src="/public/static/img/break_line.svg" >
 </div>
 
 <div class="yandex_form">
