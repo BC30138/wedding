@@ -35,7 +35,7 @@ class CreateInvitationsBatchUseCase:
             group = await self._groups_service.create_group(
                 group_data=invitation_data.group,
                 guest_1_id=guest_1.id,
-                guest_2_id=guest_2.id,
+                guest_2_id=guest_2.id if guest_2 else None,
             )
             result.append(
                 InvitationEntity(
@@ -46,5 +46,5 @@ class CreateInvitationsBatchUseCase:
             )
 
         if db_commit:
-            self._storage_service.commit()
+            await self._storage_service.commit()
         return result

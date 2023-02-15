@@ -9,3 +9,7 @@ class DomainError(Exception):
         self.msg = msg
         self.special_code = special_code
         super().__init__(self.msg)
+
+
+class EntityValidationError(DomainError):
+    pass

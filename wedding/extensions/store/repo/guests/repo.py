@@ -37,6 +37,7 @@ class GuestsRepo:
     async def save(self, guest: Guests) -> Guests:
         with self._handle_db_changes_error():
             guest = await self._db_session.merge(guest)
+            await self._db_session.flush()
             return guest
 
     async def commit(self):

@@ -7,5 +7,5 @@ class StorageService:
     def __init__(self, db_session: AsyncSession = Depends(db_session)):
         self._db_session = db_session
 
-    def commit(self):
-        self._db_session.commit()
+    async def commit(self):
+        await self._db_session.commit()

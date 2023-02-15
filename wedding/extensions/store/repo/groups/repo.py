@@ -34,7 +34,7 @@ class GroupsRepo:
     async def save(self, group: Groups) -> Groups:
         with self._handle_db_changes_error():
             group = await self._db_session.merge(group)
-            await self._db_session.commit()
+            await self._db_session.flush()
             return group
 
     async def commit(self):

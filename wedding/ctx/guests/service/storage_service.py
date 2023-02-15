@@ -50,6 +50,5 @@ class StorageService:
         guest_model = self.guest_entity_to_model(entity=guest_entity)
         guest_model = await self._guests_repo.save(guest=guest_model)
         if db_commit:
-            print("AA")
             await self._guests_repo.commit()
         return guest_model.to_entity()
