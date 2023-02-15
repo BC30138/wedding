@@ -10,7 +10,7 @@ class MaleEnum(Enum):
 @dataclass
 class GuestEntity:
     first_name: str
-    middle_name: str
+    middle_name: str | None
     last_name: str
     male: MaleEnum
     id: int = None

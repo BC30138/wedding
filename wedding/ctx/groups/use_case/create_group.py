@@ -9,6 +9,9 @@ class CreateGroupUseCase:
     def __init__(self, groups_service: GroupsService = Depends(GroupsService)):
         self._groups_service = groups_service
 
-    async def execute(self, group_data: GroupData) -> GroupEntity:
-        group = await self._groups_service.create_group(group_data=group_data)
+    async def execute(self, group_data: GroupData, db_commit: bool) -> GroupEntity:
+        group = await self._groups_service.create_group(
+            group_data=group_data,
+            db_commit=db_commit
+        )
         return group

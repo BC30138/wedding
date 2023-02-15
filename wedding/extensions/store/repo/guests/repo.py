@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+
 from fastapi import Depends
 from sqlalchemy.future import select
 from sqlalchemy.sql.selectable import Select
@@ -33,9 +35,18 @@ class GuestsRepo:
         return result.scalar_one_or_none()
 
     async def save(self, guest: Guests) -> Guests:
-        try:
+        with self._handle_db_changes_error():
             guest = await self._db_session.merge(guest)
-            await self._db_session.commit()
             return guest
+
+    async def commit(self):
+        with self._handle_db_changes_error():
+            await self._db_session.commit()
+
+    @contextmanager
+    def _handle_db_changes_error(self):
+        """Контекст для того, чтобы ловить ошибки при изменении/создании записи."""
+        try:
+            yield
         except IntegrityError as exc:
             raise GuestsConstraintError(msg=str(exc)) from exc
