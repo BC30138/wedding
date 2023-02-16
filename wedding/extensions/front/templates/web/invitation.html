@@ -1,8 +1,40 @@
 {% extends "/web/base.html" %}
+
+{% if group.pronoun.value == "they" %}
+    {% set appeal = "Дорогие" %}
+    {% set guests_names = group.guest_1.full_name + " и " + group.guest_2.full_name  %}
+{% elif group.pronoun.value == "he" %}
+    {% set appeal = "Дорогой" %}
+    {% set guests_names = group.guest_1.full_name %}
+{% else %}
+    {% set appeal = "Дорогая" %}
+    {% set guests_names = group.guest_1.full_name %}
+{% endif %}
+
+
+{% block title %}
+{% set title_text = "Приглашение на свадьбу Екатерины и Антона" %}
+{% set description = appeal + " " + guests_names + ", приглашаем вас на свадьбу Екатерины и Антона!" %}
+<title>{{title_text}}</title>
+<meta name="title" content="{{title_text}}">
+<meta property="og:title" content="{{title_text}}">
+<meta name="twitter:title" content="{{title_text}}">
+<meta name="description" content="{{description}}">
+<meta property="og:description" content="{{description}}">
+<meta name="twitter:description" content="{{description}}">
+<meta name="image" content="https://свадьбакатяантон.рф/public/static/img/og-invite.jpg">
+<meta property="og:image" content="https://свадьбакатяантон.рф/public/static/img/og-invite.jpg">
+<meta name="twitter:image" content="https://свадьбакатяантон.рф/public/static/img/og-invite.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="url" content="https://свадьбакатяантон.рф/">
+{% endblock %}
+
+
 {% block style %}
 {{ super() }}
 <link rel='stylesheet' href="/public/static/css/web/invitation.css">
 {% endblock %}
+
 
 {% block content %}
 <div class="collage">
@@ -14,15 +46,7 @@
 </div>
 
 <div class="greeting">
-    <p class="appeal">
-        {% if group.pronoun.value == "they" %}
-            Дорогие
-        {% elif group.pronoun.value == "he" %}
-            Дорогой
-        {% else %}
-            Дорогая
-        {% endif %}
-    </p>
+    <p class="appeal">{{appeal}}</p>
     <div class="guests">
         <p class="guests.unit">
             {{ group.guest_1.full_name }}

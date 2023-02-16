@@ -9,14 +9,13 @@ router = APIRouter(include_in_schema=False)
 
 
 @router.get("/{group_id}", response_class=HTMLResponse)
-# @mobility_manager.is_mobile
+@mobility_manager.is_mobile
 async def get_invitation(
     request: MobilityRequest,
     group_id: int,
     group_service: GroupService = Depends(GroupService),
 ):
-    template_name = "web/invitation.html"
-    # template_name = mobile_template_parser(request=request, template_name="invitation.html")
+    template_name = mobile_template_parser(request=request, template_name="invitation.html")
     group = await group_service.get_group(group_id=group_id)
     return templates_storage.TemplateResponse(
         template_name,
