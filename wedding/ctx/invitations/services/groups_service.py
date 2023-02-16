@@ -3,6 +3,7 @@ from fastapi import Depends
 from wedding.ctx.groups.dto.data import GroupData as DomainGroupData
 from wedding.ctx.groups.dto.representations import GroupRepresentation
 from wedding.ctx.groups.handler.create_group_handler import CreateGroupHandler
+from wedding.ctx.groups.handler.get_group_batch_handler import GetGroupBatchHandler
 from wedding.ctx.invitations.dto.data import GroupData
 from wedding.ctx.invitations.entity.structures import GroupEntity
 
@@ -11,8 +12,10 @@ class GroupsService:
     def __init__(
         self,
         create_group_api: CreateGroupHandler = Depends(CreateGroupHandler),
+        get_group_batch_api: GetGroupBatchHandler = Depends(GetGroupBatchHandler),
     ):
         self._create_group_api = create_group_api
+        self._get_group_batch_api = get_group_batch_api
 
     @staticmethod
     def create_entity_from_representation(
@@ -45,3 +48,11 @@ class GroupsService:
         return self.create_entity_from_representation(
             representation=group_repr,
         )
+
+    async def get_all_groups(self) -> list[GroupEntity]:
+        groups_representations = await self._get_group_batch_api.get_all_return_representations()
+        return [
+            self.create_entity_from_representation(
+                representation=group_representation,
+            ) for group_representation in groups_representations
+        ]

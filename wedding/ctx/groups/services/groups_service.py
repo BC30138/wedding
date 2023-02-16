@@ -40,6 +40,10 @@ class GroupsService:
             raise GroupNotFoundError(f"Group with id {group_id} not found")
         return group_model.to_entity()
 
+    async def get_group_batch_by(self) -> list[GroupEntity]:
+        group_models = await self._groups_repo.load_all()
+        return [group_model.to_entity() for group_model in group_models]
+
     async def create_group(self, group_data: GroupData, db_commit: bool):
         group_entity = self.create_group_entity(group_data=group_data)
         group_model = self.group_entity_to_model(entity=group_entity)

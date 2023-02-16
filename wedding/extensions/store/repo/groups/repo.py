@@ -16,8 +16,8 @@ class GroupsRepo:
 
     def load_query(
         self,
-        group_id: int | None,
-        name: int | None,
+        group_id: int | None = None,
+        name: int | None = None,
     ) -> Select:
         query = select(Groups)
         if group_id is not None:
@@ -30,6 +30,11 @@ class GroupsRepo:
         query = self.load_query(**kwargs)
         result = await self._db_session.execute(query)
         return result.scalar_one_or_none()
+
+    async def load_all(self, **kwargs) -> list[Groups]:
+        query = self.load_query(**kwargs)
+        result = await self._db_session.execute(query)
+        return result.scalars()
 
     async def save(self, group: Groups) -> Groups:
         with self._handle_db_changes_error():

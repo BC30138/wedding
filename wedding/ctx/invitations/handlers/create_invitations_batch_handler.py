@@ -1,15 +1,14 @@
-from io import StringIO
 from typing import TypedDict
 
 from fastapi import Depends
 from aiocsv import AsyncDictReader
-from apyio import StringIO
 
 from wedding.ctx.invitations.dto.data import InvitationDataDTO, GroupData, GuestData
 from wedding.ctx.invitations.errors import GuestValidationError
 from wedding.ctx.invitations.special_codes import GUEST_NAME_VALIDATION_ERROR, GUEST_MALE_VALIDATION_ERROR
 from wedding.ctx.invitations.use_case.create_invitations_batch import CreateInvitationsBatchUseCase
 from wedding.extensions.rest.invitations.schema import InvitationSchema
+from wedding.helpers.apyio_extender import StringIO
 
 
 class CsvRowDict(TypedDict):

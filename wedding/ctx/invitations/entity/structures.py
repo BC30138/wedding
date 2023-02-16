@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from wedding.ctx.invitations.entity.enums import MaleEnum
+from wedding.ctx.invitations.entity.vars import BASE_INVITATION_PATH
 
 
 @dataclass
@@ -28,3 +29,26 @@ class InvitationEntity:
     group: GroupEntity
     guest_1: GuestEntity
     guest_2: GuestEntity | None = None
+
+
+@dataclass
+class ShareInvitationEntity:
+    group_name: str
+    guest_1_full_name: str
+    guest_2_full_name: str | None
+    link: str
+
+    @classmethod
+    def from_entities(
+        cls,
+        group: GroupEntity,
+        guest_1: GuestEntity,
+        guest_2: GuestEntity | None,
+        base_url: str,
+    ) -> "ShareInvitationEntity":
+        return cls(
+            group_name=group.name,
+            guest_1_full_name=guest_1.full_name,
+            guest_2_full_name=guest_2.full_name if guest_2 else None,
+            link=f"{base_url}{BASE_INVITATION_PATH}/{group.id}",
+        )

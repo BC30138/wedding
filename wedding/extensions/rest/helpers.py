@@ -3,10 +3,9 @@ from http import HTTPStatus
 from typing import Type, Any
 
 from fastapi.responses import JSONResponse
-from fastapi import Request
+from fastapi import Request, Response
 from pydantic import BaseModel
 from pydantic.main import create_model
-from pydantic.schema import get_model_name_map
 
 from wedding.ctx.general_errors import DomainError
 
@@ -76,3 +75,14 @@ async def internal_error_exception_handler(
         },
         status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
     )
+
+
+class CsvResponse(Response):
+    media_type = "text/csv"
+    __filename__ = "export.csv"
+
+    @classmethod
+    def success(cls, content: bytes) -> "CsvResponse":
+        response = cls(content=content)
+        response.headers["Content-Disposition"] = f"attachment; filename={cls.__filename__}"
+        return response
