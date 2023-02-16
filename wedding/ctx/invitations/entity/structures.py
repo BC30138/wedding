@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from urllib.parse import urlparse
 
 from wedding.ctx.invitations.entity.enums import MaleEnum
 from wedding.ctx.invitations.entity.vars import BASE_INVITATION_PATH
@@ -46,9 +47,13 @@ class ShareInvitationEntity:
         guest_2: GuestEntity | None,
         base_url: str,
     ) -> "ShareInvitationEntity":
+        base_url_obj = urlparse(base_url)
+        base_url = str(base_url_obj.netloc)
+        base_url = base_url.encode().decode('idna')
+
         return cls(
             group_name=group.name,
             guest_1_full_name=guest_1.full_name,
             guest_2_full_name=guest_2.full_name if guest_2 else None,
-            link=f"{base_url}{BASE_INVITATION_PATH}/{group.id}",
+            link=f"{base_url}/{BASE_INVITATION_PATH}/{group.id}",
         )
