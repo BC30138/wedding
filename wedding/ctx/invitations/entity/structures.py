@@ -20,7 +20,7 @@ class GroupEntity:
     id: int
     name: str
     guest_1_id: int
-    guest_2_id: int
+    guest_2_id: int | None
     is_couple: bool
     form_id: str
 
@@ -49,7 +49,7 @@ class ShareInvitationEntity:
     ) -> "ShareInvitationEntity":
         base_url_obj = urlparse(base_url)
         base_url = str(base_url_obj.netloc)
-        base_url = base_url.encode().decode('idna')
+        base_url = base_url.encode().decode("idna")
 
         return cls(
             group_name=group.name,

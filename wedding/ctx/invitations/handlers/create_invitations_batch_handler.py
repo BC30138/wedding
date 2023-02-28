@@ -1,11 +1,11 @@
 from typing import TypedDict
 
-from fastapi import Depends
 from aiocsv import AsyncDictReader
+from fastapi import Depends
 
-from wedding.ctx.invitations.dto.data import InvitationDataDTO, GroupData, GuestData
+from wedding.ctx.invitations.dto.data import GroupData, GuestData, InvitationDataDTO
 from wedding.ctx.invitations.errors import GuestValidationError
-from wedding.ctx.invitations.special_codes import GUEST_NAME_VALIDATION_ERROR, GUEST_MALE_VALIDATION_ERROR
+from wedding.ctx.invitations.special_codes import GUEST_MALE_VALIDATION_ERROR, GUEST_NAME_VALIDATION_ERROR
 from wedding.ctx.invitations.use_case.create_invitations_batch import CreateInvitationsBatchUseCase
 from wedding.extensions.rest.invitations.schema import InvitationSchema
 from wedding.helpers.apyio_extender import StringIO
@@ -24,18 +24,18 @@ class CreateInvitationsBatchHandler:
         self._use_case = use_case
 
     def create_guest_data(self, string_name: str, male: str) -> GuestData:
-        if male == 'f' or male == 'female':
-            male = 'female'
-        elif male == 'm' or male == 'male':
-            male = 'male'
+        if male == "f" or male == "female":
+            male = "female"
+        elif male == "m" or male == "male":
+            male = "male"
         else:
             GuestValidationError(
                 msg=f"Wrong male: {male}",
                 special_code=GUEST_MALE_VALIDATION_ERROR,
             )
 
-        split_name_data = string_name.strip()
-        split_name_data = split_name_data.split(" ")
+        string_name = string_name.strip()
+        split_name_data = string_name.split(" ")
         if len(split_name_data) == 2:
             first_name = split_name_data[1]
             last_name = split_name_data[0]
@@ -57,20 +57,21 @@ class CreateInvitationsBatchHandler:
             male=male,
         )
 
-
     def csv_row_to_data_dto(self, csv_row: CsvRowDict) -> InvitationDataDTO:
         return InvitationDataDTO(
             group=GroupData(
-                name=csv_row['name'],
+                name=csv_row["name"],
             ),
             guest_1=self.create_guest_data(
-                string_name=csv_row['guest_1'],
-                male=csv_row['male_1'],
+                string_name=csv_row["guest_1"],
+                male=csv_row["male_1"],
             ),
             guest_2=self.create_guest_data(
-                string_name=csv_row['guest_2'],
-                male=csv_row['male_2'],
-            ) if csv_row.get('guest_2') else None,
+                string_name=csv_row["guest_2"],
+                male=csv_row["male_2"],
+            )
+            if csv_row.get("guest_2")
+            else None,
         )
 
     async def create_from_csv_return_schema(self, csv_file_bytes: bytes) -> list[InvitationSchema]:

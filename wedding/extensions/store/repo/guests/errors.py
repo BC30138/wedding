@@ -1,6 +1,6 @@
-from wedding.extensions.store.repo.guests.special_codes import GUESTS_CONSTRAINT_ERROR
 from wedding.extensions.store.global_errors import ConstraintError
 from wedding.extensions.store.repo.guests.models import Guests
+from wedding.extensions.store.repo.guests.special_codes import GUESTS_CONSTRAINT_ERROR
 
 
 class GuestsConstraintError(ConstraintError):

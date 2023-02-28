@@ -1,8 +1,8 @@
 import csv
-from typing import TypedDict
+from typing import TypedDict, cast
 
-from fastapi import Depends
 from aiocsv import AsyncDictWriter
+from fastapi import Depends
 
 from wedding.ctx.invitations.entity.structures import ShareInvitationEntity
 from wedding.ctx.invitations.use_case.get_share_invitation_batch import GetShareInvitationBatchUseCase
@@ -13,7 +13,7 @@ class CsvRowDict(TypedDict):
     num: int
     name: str
     guest_1: str
-    guest_2: str
+    guest_2: str | None
     link: str
 
 
@@ -22,10 +22,7 @@ class GetShareInvitationBatchHandler:
         self._use_case = use_case
 
     @staticmethod
-    def entity_to_csv_row(
-        num: int,
-        entity: ShareInvitationEntity
-    ) -> CsvRowDict:
+    def entity_to_csv_row(num: int, entity: ShareInvitationEntity) -> CsvRowDict:
         return CsvRowDict(
             num=num,
             name=entity.group_name,
@@ -45,4 +42,5 @@ class GetShareInvitationBatchHandler:
             row = self.entity_to_csv_row(num=it + 1, entity=invitation)
             await writer.writerow(row)
 
-        return file.getvalue().encode()
+        bytes_result = file.getvalue().encode()
+        return cast(bytes, bytes_result)

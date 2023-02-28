@@ -1,6 +1,6 @@
+from wedding.extensions.store.global_errors import ConstraintError
 from wedding.extensions.store.repo.groups.models import Groups
 from wedding.extensions.store.repo.groups.special_codes import GROUPS_CONSTRAINT_ERROR
-from wedding.extensions.store.global_errors import ConstraintError
 
 
 class GroupsConstraintError(ConstraintError):

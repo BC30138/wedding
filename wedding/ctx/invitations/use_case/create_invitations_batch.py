@@ -4,7 +4,6 @@ from wedding.ctx.invitations.dto.data import InvitationDataDTO
 from wedding.ctx.invitations.entity.structures import InvitationEntity
 from wedding.ctx.invitations.services.groups_service import GroupsService
 from wedding.ctx.invitations.services.guests_service import GuestsService
-
 from wedding.ctx.invitations.services.storage_service import StorageService
 
 
@@ -29,20 +28,20 @@ class CreateInvitationsBatchUseCase:
             guest_1 = await self._guests_service.create_guest(
                 guest_data=invitation_data.guest_1,
             )
-            guest_2 = await self._guests_service.create_guest(
-                guest_data=invitation_data.guest_2,
-            ) if invitation_data.guest_2 is not None else None
+            guest_2 = (
+                await self._guests_service.create_guest(
+                    guest_data=invitation_data.guest_2,
+                )
+                if invitation_data.guest_2 is not None
+                else None
+            )
             group = await self._groups_service.create_group(
                 group_data=invitation_data.group,
                 guest_1_id=guest_1.id,
                 guest_2_id=guest_2.id if guest_2 else None,
             )
             result.append(
-                InvitationEntity(
-                    group=group,
-                    guest_1=guest_1,
-                    guest_2=guest_2
-                ),
+                InvitationEntity(group=group, guest_1=guest_1, guest_2=guest_2),
             )
 
         if db_commit:

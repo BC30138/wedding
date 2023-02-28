@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse
 
-from wedding.extensions.front.helpers.mobility import mobility_manager, MobilityRequest, mobile_template_parser
+from wedding.extensions.front.helpers.mobility import MobilityRequest, mobile_template_parser, mobility_manager
 from wedding.extensions.front.services.group_service import GroupService
 from wedding.extensions.front.templates_storage import templates_storage
 
@@ -9,8 +9,8 @@ router = APIRouter(include_in_schema=False)
 
 
 @router.get("/{group_id}", response_class=HTMLResponse)
-@mobility_manager.is_mobile
-async def get_invitation(
+@mobility_manager.is_mobile_decorator
+async def get_invitation(  # type: ignore
     request: MobilityRequest,
     group_id: int,
     group_service: GroupService = Depends(GroupService),
@@ -22,5 +22,5 @@ async def get_invitation(
         {
             "request": request,
             "group": group,
-        }
+        },
     )

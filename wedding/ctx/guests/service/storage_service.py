@@ -1,3 +1,5 @@
+from typing import Any
+
 from fastapi import Depends
 
 from wedding.ctx.guests.dto.data import GuestData
@@ -22,7 +24,7 @@ class StorageService:
 
     @staticmethod
     def guest_entity_to_model(entity: GuestEntity) -> Guests:
-        kwagrs = {
+        kwagrs: dict[str, Any] = {
             "first_name": entity.first_name,
             "middle_name": entity.middle_name,
             "last_name": entity.last_name,

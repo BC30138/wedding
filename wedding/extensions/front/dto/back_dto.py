@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any
 
 
 class GroupPronounEnum(Enum):
@@ -12,10 +13,10 @@ class GroupPronounEnum(Enum):
 class GuestInfo:
     full_name: str
     male: str
-    id: int = None
+    id: int
 
     @classmethod
-    def from_json(cls, json_data: dict) -> "GuestInfo":
+    def from_json(cls, json_data: dict[str, Any]) -> "GuestInfo":
         return cls(
             full_name=json_data["full_name"],
             male=json_data["male"],
@@ -29,25 +30,8 @@ class GroupInfo:
     name: str
     is_couple: bool
     form_id: str
-    guest_1: GuestInfo | None
+    guest_1: GuestInfo
     guest_2: GuestInfo | None
-
-
-    @classmethod
-    def from_json(
-        cls,
-        json_data: dict,
-        guest_1: GuestInfo,
-        guest_2: GuestInfo | None,
-    ) -> "GroupInfo":
-        return cls(
-            id=json_data["id"],
-            name=json_data["name"],
-            guest_1=guest_1,
-            guest_2=guest_2,
-            is_couple=json_data["is_couple"],
-            form_id=json_data["form_id"]
-        )
 
     @property
     def pronoun(self) -> GroupPronounEnum:
@@ -57,3 +41,19 @@ class GroupInfo:
             return GroupPronounEnum.he
         else:
             return GroupPronounEnum.she
+
+    @classmethod
+    def from_json(
+        cls,
+        json_data: dict[str, Any],
+        guest_1: GuestInfo,
+        guest_2: GuestInfo | None,
+    ) -> "GroupInfo":
+        return cls(
+            id=json_data["id"],
+            name=json_data["name"],
+            guest_1=guest_1,
+            guest_2=guest_2,
+            is_couple=json_data["is_couple"],
+            form_id=json_data["form_id"],
+        )

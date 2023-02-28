@@ -6,17 +6,14 @@ from fastapi import APIRouter, Depends
 from wedding.ctx.groups.errors import GroupNotFoundError
 from wedding.ctx.groups.handler.create_group_handler import CreateGroupHandler
 from wedding.ctx.groups.handler.get_group_handler import GetGroupHandler
-from wedding.extensions.rest.groups.schema import GroupSchema, GroupDataSchema
+from wedding.extensions.rest.groups.schema import GroupDataSchema, GroupSchema
 from wedding.extensions.rest.helpers import ResponseGenerator
 
 router = APIRouter(tags=["groups"])
 
 
-@router.get(
-    "/{group_id}",
-    response_model=ResponseGenerator.success_schema(GroupSchema)
-)
-async def get_group(
+@router.get("/{group_id}", response_model=ResponseGenerator.success_schema(GroupSchema))
+async def get_group(  # type: ignore
     group_id: int,
     handler: GetGroupHandler = Depends(GetGroupHandler),
 ):
@@ -34,7 +31,7 @@ async def get_group(
     "/",
     response_model=ResponseGenerator.success_schema(GroupSchema),
 )
-async def create_group(
+async def create_group(  # type: ignore
     group_data: GroupDataSchema,
     handler: CreateGroupHandler = Depends(CreateGroupHandler),
 ):

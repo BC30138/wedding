@@ -3,7 +3,7 @@ from fastapi import Depends
 from wedding.ctx.groups.dto.data import GroupData
 from wedding.ctx.groups.dto.representations import GroupRepresentation
 from wedding.ctx.groups.use_case.create_group import CreateGroupUseCase
-from wedding.extensions.rest.groups.schema import GroupSchema, GroupDataSchema
+from wedding.extensions.rest.groups.schema import GroupDataSchema, GroupSchema
 
 
 class CreateGroupHandler:

@@ -36,13 +36,13 @@ class GroupsService:
         guest_1_id: int,
         guest_2_id: int | None,
     ) -> GroupEntity:
-        group_data = DomainGroupData(
+        domain_group_data = DomainGroupData(
             name=group_data.name,
             guest_1_id=guest_1_id,
             guest_2_id=guest_2_id,
         )
         group_repr = await self._create_group_api.create_by_dto_return_representation(
-            group_data=group_data,
+            group_data=domain_group_data,
             db_commit=False,
         )
         return self.create_entity_from_representation(
@@ -54,5 +54,6 @@ class GroupsService:
         return [
             self.create_entity_from_representation(
                 representation=group_representation,
-            ) for group_representation in groups_representations
+            )
+            for group_representation in groups_representations
         ]

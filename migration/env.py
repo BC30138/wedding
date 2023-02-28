@@ -1,9 +1,8 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
+
 from wedding.cfg import app_configuration
 from wedding.extensions.store.database import Base
 
@@ -12,7 +11,7 @@ from wedding.extensions.store.database import Base
 config = context.config
 
 config.set_main_option(
-    'sqlalchemy.url',
+    "sqlalchemy.url",
     app_configuration.database_url,
 )
 
@@ -71,9 +70,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

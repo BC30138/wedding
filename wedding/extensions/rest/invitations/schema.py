@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from wedding.ctx.invitations.entity.structures import InvitationEntity, GroupEntity, GuestEntity
+from wedding.ctx.invitations.entity.structures import GroupEntity, GuestEntity, InvitationEntity
 from wedding.extensions.rest.groups.schema import GroupSchema
 from wedding.extensions.rest.guests.schema import GuestSchema
 
@@ -39,5 +39,7 @@ class InvitationSchema(BaseModel):
             guest_1=cls._guest_schema_from_entity(entity=entity.guest_1),
             guest_2=cls._guest_schema_from_entity(
                 entity=entity.guest_2,
-            ) if entity.guest_2 is not None else None,
+            )
+            if entity.guest_2 is not None
+            else None,
         )

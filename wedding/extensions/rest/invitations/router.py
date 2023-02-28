@@ -1,8 +1,8 @@
-from fastapi import APIRouter, File, Depends, Request
+from fastapi import APIRouter, Depends, File, Request
 
 from wedding.ctx.invitations.handlers.create_invitations_batch_handler import CreateInvitationsBatchHandler
 from wedding.ctx.invitations.handlers.get_share_invitation_batch_handler import GetShareInvitationBatchHandler
-from wedding.extensions.rest.helpers import ResponseGenerator, CsvResponse
+from wedding.extensions.rest.helpers import CsvResponse, ResponseGenerator
 from wedding.extensions.rest.invitations.schema import InvitationSchema
 
 router = APIRouter(tags=["invitations"])
@@ -12,9 +12,9 @@ router = APIRouter(tags=["invitations"])
     "/import/csv",
     response_model=ResponseGenerator.success_schema(
         list[InvitationSchema],
-    )
+    ),
 )
-async def upload_invitations(
+async def upload_invitations(  # type: ignore
     file: bytes = File(),
     handler: CreateInvitationsBatchHandler = Depends(CreateInvitationsBatchHandler),
 ):
@@ -26,7 +26,7 @@ async def upload_invitations(
     "/export/csv",
     response_class=CsvResponse,
 )
-async def download_invitations(
+async def download_invitations(  # type: ignore
     request: Request,
     handler: GetShareInvitationBatchHandler = Depends(GetShareInvitationBatchHandler),
 ):

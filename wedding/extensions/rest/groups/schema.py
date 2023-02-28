@@ -7,7 +7,7 @@ from wedding.ctx.groups.entity.group import GroupEntity
 
 class GroupDataSchema(BaseModel):
     name: str
-    guest_1_id: int | None
+    guest_1_id: int
     guest_2_id: int | None
 
     def to_dto(self) -> GroupData:

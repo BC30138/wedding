@@ -1,9 +1,10 @@
 import importlib
 import pkgutil
+from types import ModuleType
 
 
-def import_sqlalchemy_models(package):
-    """ Import all submodules of a module, recursively, including subpackages
+def import_sqlalchemy_models(package: ModuleType | str) -> dict[str, ModuleType]:
+    """Import all submodules of a module, recursively, including subpackages
 
     :param package: package (name or actual module)
     :type package: str | module
@@ -12,8 +13,8 @@ def import_sqlalchemy_models(package):
     if isinstance(package, str):
         package = importlib.import_module(package)
     results = {}
-    for loader, name, is_pkg in pkgutil.walk_packages(package.__path__):
-        full_name = package.__name__ + '.' + name
+    for _loader, name, is_pkg in pkgutil.walk_packages(package.__path__):
+        full_name = package.__name__ + "." + name
         if is_pkg:
             results.update(import_sqlalchemy_models(full_name))
         elif name == "models":

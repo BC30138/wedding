@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import cast
 
 from wedding.ctx.guests.entity.guest import GuestEntity
 
@@ -14,8 +15,9 @@ class GuestRepresentation:
 
     @classmethod
     def from_entity(cls, guest_entity: GuestEntity) -> "GuestRepresentation":
+        guest_id = cast(int, guest_entity.id)
         return cls(
-            id=guest_entity.id,
+            id=guest_id,
             first_name=guest_entity.first_name,
             middle_name=guest_entity.middle_name,
             last_name=guest_entity.last_name,

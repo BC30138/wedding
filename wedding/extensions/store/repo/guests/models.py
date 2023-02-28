@@ -20,4 +20,3 @@ class Guests(Base):
             last_name=self.last_name,
             male=MaleEnum(self.male),
         )
-

@@ -1,12 +1,14 @@
+from collections.abc import Iterator
 from contextlib import contextmanager
+from typing import Any, cast
 
 from fastapi import Depends
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.sql.selectable import Select
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import IntegrityError
+
 from wedding.extensions.store.database import db_session
-from wedding.extensions.store.global_errors import ConstraintError
 from wedding.extensions.store.repo.guests.errors import GuestsConstraintError
 from wedding.extensions.store.repo.guests.models import Guests
 
@@ -14,6 +16,12 @@ from wedding.extensions.store.repo.guests.models import Guests
 class GuestsRepo:
     def __init__(self, db_session: AsyncSession = Depends(db_session)):
         self._db_session = db_session
+
+    async def save(self, guest: Guests) -> Guests:
+        with self._handle_db_changes_error():
+            guest = await self._db_session.merge(guest)
+            await self._db_session.flush()
+            return guest
 
     def load_query(
         self,
@@ -24,28 +32,24 @@ class GuestsRepo:
             query = query.filter(Guests.id == guest_id)
         return query
 
-    async def load(self, **kwargs) -> list[Guests]:
+    async def load(self, **kwargs: Any) -> list[Guests]:
         query = self.load_query(**kwargs)
         result = await self._db_session.execute(query)
-        return result.scalars()
+        result = result.scalars()
+        return cast(list[Guests], result)
 
-    async def load_one(self, **kwargs) -> Guests | None:
+    async def load_one(self, **kwargs: Any) -> Guests | None:
         query = self.load_query(**kwargs)
         result = await self._db_session.execute(query)
-        return result.scalar_one_or_none()
+        result = result.scalar_one_or_none()
+        return cast(Guests, result)
 
-    async def save(self, guest: Guests) -> Guests:
-        with self._handle_db_changes_error():
-            guest = await self._db_session.merge(guest)
-            await self._db_session.flush()
-            return guest
-
-    async def commit(self):
+    async def commit(self) -> None:
         with self._handle_db_changes_error():
             await self._db_session.commit()
 
     @contextmanager
-    def _handle_db_changes_error(self):
+    def _handle_db_changes_error(self) -> Iterator[None]:
         """Контекст для того, чтобы ловить ошибки при изменении/создании записи."""
         try:
             yield

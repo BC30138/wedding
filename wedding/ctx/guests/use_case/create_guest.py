@@ -10,8 +10,7 @@ class CreateGuestUseCase:
         self._storage_service = storage_service
 
     async def execute(self, guest_data: GuestData, db_commit: bool) -> GuestEntity:
-        guest = await self._storage_service.create_guest(
+        return await self._storage_service.create_guest(
             guest_data=guest_data,
             db_commit=db_commit,
         )
-        return guest

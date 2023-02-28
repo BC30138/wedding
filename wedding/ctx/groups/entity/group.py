@@ -11,16 +11,13 @@ class FormIdEnum(Enum):
 @dataclass
 class GroupEntity:
     name: str
-    guest_1_id: int | None
+    guest_1_id: int
     guest_2_id: int | None
-    id: int = None
+    id: int | None = None
 
     @property
     def is_couple(self) -> bool:
-        if self.guest_2_id:
-            return True
-        else:
-            return False
+        return bool(self.guest_2_id)
 
     @property
     def form_id(self) -> FormIdEnum:

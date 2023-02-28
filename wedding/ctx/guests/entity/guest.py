@@ -13,7 +13,7 @@ class GuestEntity:
     middle_name: str | None
     last_name: str
     male: MaleEnum
-    id: int = None
+    id: int | None = None
 
     @property
     def full_name(self) -> str:

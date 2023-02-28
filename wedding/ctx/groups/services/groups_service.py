@@ -44,11 +44,10 @@ class GroupsService:
         group_models = await self._groups_repo.load_all()
         return [group_model.to_entity() for group_model in group_models]
 
-    async def create_group(self, group_data: GroupData, db_commit: bool):
+    async def create_group(self, group_data: GroupData, db_commit: bool) -> GroupEntity:
         group_entity = self.create_group_entity(group_data=group_data)
         group_model = self.group_entity_to_model(entity=group_entity)
         group_model = await self._groups_repo.save(group=group_model)
-        result = group_model.to_entity()
         if db_commit:
             await self._groups_repo.commit()
-        return result
+        return group_model.to_entity()

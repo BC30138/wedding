@@ -9,5 +9,4 @@ class GetGroupBatchUseCase:
         self._groups_service = groups_service
 
     async def execute(self) -> list[GroupEntity]:
-        groups = await self._groups_service.get_group_batch_by()
-        return groups
+        return await self._groups_service.get_group_batch_by()

@@ -1,5 +1,5 @@
 """Модели бд для группы гостей."""
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, ForeignKey, Integer, String
 
 from wedding.ctx.groups.entity.group import GroupEntity
 from wedding.extensions.store.database import Base
@@ -12,7 +12,7 @@ class Groups(Base):
     guest_1_id = Column(Integer, ForeignKey("guests.id"))
     guest_2_id = Column(Integer, ForeignKey("guests.id"))
 
-    def to_entity(self):
+    def to_entity(self) -> GroupEntity:
         return GroupEntity(
             id=self.id,
             name=self.name,

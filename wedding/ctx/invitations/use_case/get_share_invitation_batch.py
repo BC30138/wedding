@@ -19,9 +19,13 @@ class GetShareInvitationBatchUseCase:
         groups = await self._groups_service.get_all_groups()
         for group in groups:
             guest_1 = await self._guests_service.get_guest(guest_id=group.guest_1_id)
-            guest_2 = await self._guests_service.get_guest(
-                guest_id=group.guest_2_id,
-            ) if group.guest_2_id is not None else None
+            guest_2 = (
+                await self._guests_service.get_guest(
+                    guest_id=group.guest_2_id,
+                )
+                if group.guest_2_id is not None
+                else None
+            )
             invitations.append(
                 ShareInvitationEntity.from_entities(
                     group=group,

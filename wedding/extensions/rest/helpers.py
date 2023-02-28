@@ -1,15 +1,16 @@
 from enum import Enum
 from http import HTTPStatus
-from typing import Type, Any
+from typing import Any
 
-from fastapi.responses import JSONResponse
 from fastapi import Request, Response
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from pydantic.main import create_model
 
 from wedding.ctx.general_errors import DomainError
 
 INTERNAL_ERROR_CODE = "INTERNAL_ERROR"
+
 
 class ResponseStatus(Enum):
     success = "success"
@@ -22,14 +23,14 @@ class BaseResponseSchema(BaseModel):
 
 
 class ResponseGenerator:
-    created_models = {}
+    created_models: dict[str, type[BaseResponseSchema]] = {}
 
     @classmethod
     def success_schema(
         cls,
-        schema: Type[BaseModel] | list[Type[BaseModel]],
-    ) -> Type[BaseResponseSchema]:
-        model_name = f"{schema.__name__}Success"
+        schema: type[BaseModel] | list[type[BaseModel]],
+    ) -> type[BaseResponseSchema]:
+        model_name = f"{schema.__name__}Success"  # type: ignore
         if model_name not in cls.created_models:
             created_model = create_model(
                 model_name,
@@ -59,14 +60,14 @@ class ResponseGenerator:
                 "error_msg": exc.msg,
                 "entity": exc.entity,
             },
-            status_code=status_code
+            status_code=status_code,
         )
 
 
 async def internal_error_exception_handler(
-    _request: Request,
+    _request: Request,  # noqa: U101
     exc: Exception,
-):
+) -> JSONResponse:
     return JSONResponse(
         content={
             "status": ResponseStatus.error.value,

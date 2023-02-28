@@ -4,17 +4,14 @@ from fastapi import APIRouter, Depends
 
 from wedding.ctx.guests.handler.create_guest_handler import CreateGuestHandler
 from wedding.ctx.guests.handler.get_guest_handler import GetGuestHandler
-from wedding.extensions.rest.guests.schema import GuestSchema, GuestDataSchema
+from wedding.extensions.rest.guests.schema import GuestDataSchema, GuestSchema
 from wedding.extensions.rest.helpers import ResponseGenerator
 
 router = APIRouter(tags=["guests"])
 
 
-@router.get(
-    "/{guest_id}",
-    response_model=ResponseGenerator.success_schema(GuestSchema)
-)
-async def get_guest(
+@router.get("/{guest_id}", response_model=ResponseGenerator.success_schema(GuestSchema))
+async def get_guest(  # type: ignore
     guest_id: int,
     handler: GetGuestHandler = Depends(GetGuestHandler),
 ):
@@ -26,7 +23,7 @@ async def get_guest(
     "/",
     response_model=ResponseGenerator.success_schema(GuestSchema),
 )
-async def create_guest(
+async def create_guest(  # type: ignore
     guest_data: GuestDataSchema,
     handler: CreateGuestHandler = Depends(CreateGuestHandler),
 ):

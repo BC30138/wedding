@@ -1,12 +1,12 @@
 from fastapi import Depends
 
+from wedding.ctx.guests.dto.data import GuestData as DomainGuestData
 from wedding.ctx.guests.dto.representations import GuestRepresentation
 from wedding.ctx.guests.handler.create_guest_handler import CreateGuestHandler
 from wedding.ctx.guests.handler.get_guest_handler import GetGuestHandler
 from wedding.ctx.invitations.dto.data import GuestData
-from wedding.ctx.guests.dto.data import GuestData as DomainGuestData
 from wedding.ctx.invitations.entity.enums import MaleEnum
-from wedding.ctx.invitations.entity.structures import GuestEntity, InvitationEntity
+from wedding.ctx.invitations.entity.structures import GuestEntity
 
 
 class GuestsService:
@@ -19,9 +19,7 @@ class GuestsService:
         self._get_guest_api = get_guest_api
 
     @staticmethod
-    def create_entity_from_representation(
-        representation: GuestRepresentation
-    ) -> GuestEntity:
+    def create_entity_from_representation(representation: GuestRepresentation) -> GuestEntity:
         return GuestEntity(
             id=representation.id,
             first_name=representation.first_name,
