@@ -16,4 +16,4 @@ jobs:
           pip install pre-commit
       - name: Python linter [pre-commit]
         run: |
-          python -m pre-commit run --all-files
+          pre-commit run --all-files
