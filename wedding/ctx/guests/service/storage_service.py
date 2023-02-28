@@ -34,10 +34,6 @@ class StorageService:
             kwagrs["id"] = entity.id
         return Guests(**kwagrs)
 
-    async def get_guest_list_by(self) -> list[GuestEntity]:
-        guest_models = await self._guests_repo.load()
-        return [guest_model.to_entity() for guest_model in guest_models]
-
     async def get_guest_by_id(
         self,
         guest_id: int,
