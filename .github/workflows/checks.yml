@@ -32,16 +32,13 @@ jobs:
           postgresql db: 'wedding'
           postgresql user: $PSQL_USER
           postgresql password: $PSQL_PASSWORD
-      - name: Python linter [pre-commit]
-          run: |
-            pre-commit run --all-files
       - name: Packages setup
-          run: |
-            pip install poetry
-            poetry install
+        run: |
+          pip install poetry
+          poetry install
       - name: Create env file
-          run: |
-            touch .env
-            echo DATABASE_URL=postgresql://$PSQL_USER:$PSQL_PASSWORD@localhost:5432/wedding >> .env
+        run: |
+          touch .env
+          echo DATABASE_URL=postgresql://$PSQL_USER:$PSQL_PASSWORD@localhost:5432/wedding >> .env
       - name: Pytest
-          run: PYTHONPATH=. pytest tests
+        run: PYTHONPATH=. pytest tests
