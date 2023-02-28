@@ -1,0 +1,47 @@
+name: Checks
+
+on:
+  push:
+    branches: ["*"]
+
+  workflow_dispatch:
+
+env:
+  PSQL_USER: admin
+  PSQL_PASSWORD: password
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Packages setup
+        run: |
+          pip install pre-commit
+      - name: Python linter [pre-commit]
+        run: |
+          pre-commit run --all-files
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: '14-alpine'
+          postgresql db: 'wedding'
+          postgresql user: $PSQL_USER
+          postgresql password: $PSQL_PASSWORD
+      - name: Python linter [pre-commit]
+          run: |
+            pre-commit run --all-files
+      - name: Packages setup
+          run: |
+            pip install poetry
+            poetry install
+      - name: Create env file
+          run: |
+            touch .env
+            echo DATABASE_URL=postgresql://$PSQL_USER:$PSQL_PASSWORD@localhost:5432/wedding >> .env
+      - name: Pytest
+          run: PYTHONPATH=. pytest tests
