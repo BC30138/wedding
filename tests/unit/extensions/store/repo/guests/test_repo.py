@@ -18,6 +18,7 @@ def assert_data_fields(left_model: Guests, right_model: Guests):
 
 
 @pytest.mark.asyncio()
+@pytest.mark.filterwarnings("ignore::sqlalchemy.exc.SAWarning")  # тест вызывает роллбек
 @patch.object(GuestsRepo, "_handle_db_changes_error")
 async def test_save__happy_path(
     handle_db_changes_error_mock: MagicMock,
