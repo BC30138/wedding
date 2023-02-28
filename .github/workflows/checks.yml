@@ -43,5 +43,7 @@ jobs:
         run: |
           touch .env
           echo DATABASE_URL=postgresql://$PSQL_USER:$PSQL_PASSWORD@localhost:5432/wedding >> .env
+      - name: Alembic
+        run: poetry run alembic updgrade head
       - name: Pytest
-        run: PYTHONPATH=. poetry run pytest tests
+        run: poetry run pytest tests
