@@ -44,4 +44,4 @@ jobs:
           touch .env
           echo DATABASE_URL=postgresql://$PSQL_USER:$PSQL_PASSWORD@localhost:5432/wedding >> .env
       - name: Pytest
-        run: PYTHONPATH=. pytest tests
+        run: PYTHONPATH=. poetry run pytest tests
