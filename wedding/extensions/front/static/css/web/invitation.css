@@ -20,6 +20,10 @@ p {
     justify-content: center;
 }
 
+.paragraph img {
+    width: 50%;
+}
+
 .p_close img {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
