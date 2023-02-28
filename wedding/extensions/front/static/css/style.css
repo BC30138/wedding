@@ -4,14 +4,14 @@
 }
 
 @font-face {
-  font-family:"comfortaa";
-  src: url("/public/static/fonts/comfortaa.ttf") format("truetype");
+  font-family:"helvetica";
+  src: url("/public/static/fonts/helvetica.ttf") format("truetype");
 }
 
 * {
-  font-family: "comfortaa";
+  font-family: "helvetica";
   color: #000000;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 html {
