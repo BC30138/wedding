@@ -29,5 +29,6 @@ COPY ./wedding /code/wedding
 COPY ./migration /code/migration
 COPY ./alembic.ini /code/alembic.ini
 COPY ./docker/web/entrypoint.sh /code/entrypoint.sh
+COPY ./log-config.yml /code/log-config.yml
 
 CMD ["./entrypoint.sh"]
