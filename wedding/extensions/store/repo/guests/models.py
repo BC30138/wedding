@@ -1,7 +1,7 @@
 """Бд модели гостей."""
 from sqlalchemy import Column, Integer, String
 
-from wedding.ctx.guests.entity.guest import GuestEntity, MaleEnum
+from wedding.ctx.guests.entity.guest import GuestEntity
 from wedding.extensions.store.database import Base
 from wedding.extensions.store.utils.models import ReprMixin
 
@@ -22,5 +22,5 @@ class Guests(Base, ReprMixin):
             first_name=self.first_name,
             middle_name=self.middle_name,
             last_name=self.last_name,
-            male=MaleEnum(self.male),
+            male=GuestEntity.cast_male(self.male),
         )
