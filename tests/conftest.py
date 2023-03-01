@@ -30,16 +30,3 @@ async def db_session():
         await trans.rollback()
         await connection.close()
         await engine.dispose()
-
-
-# @pytest.fixture(autouse=True)
-# def clear_unique_faker():
-#     """
-#     Фикстура необходима для того, чтобы чистить
-#     значения сгененрированные уникальным фэйкером после каждого
-#     теста. Иначе в тестах, которые генерируют одно и то же поле
-#     с ограниченным количеством выбора элементов быстро закончатся варианты.
-#     """
-#     for faker_obj in UniqueFaker._UNIQUE_FAKER_REGISTRY:
-#         print(faker_obj._generated)
-#         faker_obj.clear()

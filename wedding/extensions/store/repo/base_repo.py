@@ -41,7 +41,12 @@ class BaseRepo:
     @abstractmethod
     @contextmanager
     def _handle_changes_errors(self) -> Iterator[None]:
-        """Контекст для того, чтобы ловить ошибки при изменении/создании записи."""
+        """
+        Контекст для того, чтобы ловить ошибки при изменении/создании записи.
+
+        :raises ConstraintError: когда произошел конфликт в бд
+        :raises StoreError: нераспознанная ошибка бд
+        """
         try:
             yield
         except IntegrityError as exc:
@@ -69,6 +74,9 @@ class BaseRepo:
         Контекст для того, чтобы ловить ошибки при загрузке одной записи.
 
         :param filters: фильтры для поиска
+
+        :raises MultipleResultsFound: когда найдено несколько записей
+        :raises StoreError: нераспознанная ошибка бд
         """
         try:
             yield

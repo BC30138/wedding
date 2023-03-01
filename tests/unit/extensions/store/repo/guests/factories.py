@@ -28,4 +28,4 @@ class LoadGuestsFiltersFactory(factory.Factory):
     class Meta:
         model = LoadGuestsFilters
 
-    guest_ids = factory.List([UniqueFaker("pyint") for _ in range(randint(1, 10))])
+    guest_ids = factory.List([UniqueFaker("pyint", min_value=1) for _ in range(randint(1, 10))])

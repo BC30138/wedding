@@ -39,7 +39,11 @@ class GuestsRepo(BaseRepo):
 
     @contextmanager
     def _handle_load_one_errors(self, filters: LoadGuestsFilters) -> Iterator[None]:
-        """Контекст для того, чтобы ловить ошибки при загрузке одной записи."""
+        """
+        Контекст для того, чтобы ловить ошибки при загрузке одной записи.
+
+        :raises MultipleGuestsFoundError: когда найдено несколько записей
+        """
         try:
             yield
         except MultipleResultsFound as exc:
@@ -48,7 +52,12 @@ class GuestsRepo(BaseRepo):
 
     @contextmanager
     def _handle_changes_errors(self) -> Iterator[None]:
-        """Контекст для того, чтобы ловить ошибки при изменении/создании записи."""
+        """
+        Контекст для того, чтобы ловить ошибки при изменении/создании записи.
+
+        :raises GuestsConstraintError: когда произошел конфликт в бд
+        :raises GuestDBError: нераспознанная ошибка бд
+        """
         try:
             yield
         except IntegrityError as exc:
