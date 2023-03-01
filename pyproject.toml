@@ -20,6 +20,7 @@ alembic = "1.9.2"
 aiocsv = "1.2.3"
 python-multipart = "0.0.5"
 apyio = "0.2.0"
+pyyaml = "6.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -74,17 +75,24 @@ multiline-quotes = "double"
 builtins-ignorelist = ["id"]
 # S101 Use of assert detected. The enclosed code will be removed when compiling to optimised byte code
 per-file-ignores = [
-    "tests/*:S101",
+    "tests/*:S101, U101",
 ]
 # R505 unnecessary else after return statement
 # B008 Do not perform function calls in argument defaults (FastAPI injection)
 # R504 unnecessary variable assignment before return statement.
-ignore = ["R505", "B008", "R504"]
+# S311 Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+# PT012 pytest.raises() block should contain a single simple statement
+# PT019 fixture without value is injected as parameter, use @pytest.mark.usefixtures instead
+# G202 Logging statement has redundant exc_info
+ignore = ["R505", "B008", "R504", "S311", "PT012", "PT019", "G202"]
 
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["wedding"]
+log_cli_format = "%(asctime)s - %(levelname)s - %(name)s - %(message)s"
+log_cli = true
+log_cli_level = "INFO"
 
 
 [tool.isort]
@@ -96,7 +104,7 @@ line_length = 120
 [tool.mypy]
 python_version = "3.11"
 ignore_missing_imports = true
-disable_error_code = "misc"
+disable_error_code = "misc, override"
 
 
 [build-system]

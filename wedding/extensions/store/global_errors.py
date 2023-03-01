@@ -14,3 +14,7 @@ class StoreError(Exception):
 
 class ConstraintError(StoreError):
     pass
+
+
+class MultipleRowsFoundError(StoreError):
+    pass

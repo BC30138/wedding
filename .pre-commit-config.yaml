@@ -42,12 +42,7 @@ repos:
           - --strict
           - --allow-subclassing-any
         additional_dependencies:
-          - types-smorest
-          - types-Flask
-          - marshmallow
-          - marshmallow_dataclass
-          - types-python-slugify
-          - injector
+          - types-PyYAML
 
   - repo: https://github.com/pycqa/flake8
     rev: 6.0.0

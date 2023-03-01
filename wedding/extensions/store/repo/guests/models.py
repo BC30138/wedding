@@ -3,9 +3,10 @@ from sqlalchemy import Column, Integer, String
 
 from wedding.ctx.guests.entity.guest import GuestEntity, MaleEnum
 from wedding.extensions.store.database import Base
+from wedding.extensions.store.utils.models import ReprMixin
 
 
-class Guests(Base):
+class Guests(Base, ReprMixin):
     __tablename__ = "guests"
     __table_args__ = {"comment": "Таблица гостей"}
     id = Column(Integer, primary_key=True, comment="Идентификатор гостя")

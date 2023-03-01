@@ -3,9 +3,10 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 
 from wedding.ctx.groups.entity.group import GroupEntity
 from wedding.extensions.store.database import Base
+from wedding.extensions.store.utils.models import ReprMixin
 
 
-class Groups(Base):
+class Groups(Base, ReprMixin):
     __tablename__ = "groups"
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False, unique=True)

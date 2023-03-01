@@ -1,48 +1,100 @@
 """Тестирование репозитория гостей."""
-from typing import cast
-from unittest.mock import MagicMock, patch
+from typing import Any
+from unittest.mock import MagicMock
 
 import pytest
+from faker import Faker
+from sqlalchemy import select
+from sqlalchemy.exc import DBAPIError, IntegrityError, MultipleResultsFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from tests.unit.extensions.store.repo.guests.factories import GuestsFactory
+from tests.unit.extensions.store.repo.guests.factories import GuestsFactory, LoadGuestsFiltersFactory
+from wedding.extensions.store.repo.guests.errors import GuestDBError, GuestsConstraintError, MultipleGuestsFoundError
 from wedding.extensions.store.repo.guests.models import Guests
 from wedding.extensions.store.repo.guests.repo import GuestsRepo
 
 
-def assert_data_fields(left_model: Guests, right_model: Guests):
-    assert left_model.male == right_model.male
-    assert left_model.first_name == right_model.first_name
-    assert left_model.middle_name == right_model.middle_name
-    assert left_model.last_name == right_model.last_name
+@pytest.mark.asyncio()
+@pytest.mark.parametrize(
+    ("case_name", "filters"),
+    [
+        ("guest_ids", {"guest_ids": [4, 8, 15]}),
+        ("all", {}),
+    ],
+)
+async def test_load_query__happy_path(
+    case_name: str,
+    filters: dict[str, Any],
+    db_session: AsyncSession,
+    faker: Faker,
+):
+    """Проверка выборки для поиска гостей в базе."""
+    # Arrange
+    repo = GuestsRepo(db_session=db_session)
+    unique_faker = faker.unique
+
+    async def guest_ids_setup() -> set[Guests]:
+        # Нет в результате выборки
+        for _ in range(faker.pyint(min_value=3, max_value=10)):
+            await GuestsFactory(id=unique_faker.pyint(min_value=50, max_value=100))
+        # Ожидаемый результат выборки
+        result = set()
+        for guest_id in filters["guest_ids"]:
+            result.add(await GuestsFactory(id=guest_id))
+        return result
+
+    async def all_setup() -> set[Guests]:
+        # Ожидаемый результат выборки
+        result = await db_session.execute(select(Guests))
+        result = set(result.scalars())
+        for _ in range(faker.pyint(min_value=3, max_value=10)):
+            result.add(await GuestsFactory())
+        return result
+
+    setup_result = await locals()[f"{case_name}_setup"]()
+
+    # Act
+    result_query = repo.load_query(filters=filters)
+
+    # Asserts
+    result = await db_session.execute(result_query)
+    result = set(result.scalars())
+    assert result == setup_result
 
 
 @pytest.mark.asyncio()
-@pytest.mark.filterwarnings("ignore::sqlalchemy.exc.SAWarning")  # тест вызывает роллбек
-@patch.object(GuestsRepo, "_handle_db_changes_error")
-async def test_save__happy_path(
-    handle_db_changes_error_mock: MagicMock,
-    db_session: AsyncSession,
-):
-    """Проверка сохранения гостя в бд."""
+@pytest.mark.parametrize(
+    ("raised_exception", "expected_exception"),
+    [(MultipleResultsFound, MultipleGuestsFoundError)],
+)
+async def test_handle_load_one_errors__errors(raised_exception, expected_exception):
+    """Проверка хэндла ошибок при запросе данных."""
     # Arrange
-    guest_model = GuestsFactory.build_model(first_name="aaa")
-    repo = GuestsRepo(db_session=db_session)
+    repo = GuestsRepo(db_session=MagicMock())
+    filters = LoadGuestsFiltersFactory()
 
-    # Act
-    result = await repo.save(guest=guest_model)
+    # Act & Asserts
+    with pytest.raises(expected_exception), repo._handle_load_one_errors(filters=filters):
+        raise raised_exception()
 
-    # Asserts
-    handle_db_changes_error_mock.return_value.__enter__.assert_called_once_with()
-    assert result.id is not None
-    db_result = cast(Guests, await db_session.get(Guests, result.id))
-    assert db_result is not None
-    assert_data_fields(
-        left_model=db_result,
-        right_model=guest_model,
-    )
 
-    # Проверка того, что не вызывается коммит
-    await db_session.rollback()
-    db_result = cast(Guests, await db_session.get(Guests, result.id))
-    assert db_result is None
+@pytest.mark.asyncio()
+@pytest.mark.parametrize(
+    ("raised_exception", "expected_exception"),
+    [
+        (IntegrityError, GuestsConstraintError),
+        (DBAPIError, GuestDBError),
+    ],
+)
+async def test_handle_changes_errors__errors(raised_exception, expected_exception):
+    """Проверка хэндла ошибки, когда вернулось несколько записей."""
+    # Arrange
+    repo = GuestsRepo(db_session=MagicMock())
+
+    # Act & Asserts
+    with pytest.raises(expected_exception), repo._handle_changes_errors():
+        raise raised_exception(
+            statement=MagicMock(),
+            params=MagicMock(),
+            orig=MagicMock(),
+        )

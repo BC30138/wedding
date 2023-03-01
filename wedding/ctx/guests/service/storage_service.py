@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, cast
 
 from fastapi import Depends
 
@@ -6,7 +6,7 @@ from wedding.ctx.guests.dto.data import GuestData
 from wedding.ctx.guests.entity.guest import GuestEntity, MaleEnum
 from wedding.ctx.guests.errors import GuestNotFoundError
 from wedding.extensions.store.repo.guests.models import Guests
-from wedding.extensions.store.repo.guests.repo import GuestsRepo
+from wedding.extensions.store.repo.guests.repo import GuestsRepo, LoadGuestsFilters
 
 
 class StorageService:
@@ -38,7 +38,10 @@ class StorageService:
         self,
         guest_id: int,
     ) -> GuestEntity:
-        guest_model = await self._guests_repo.load_one(guest_id=guest_id)
+        guest_model = await self._guests_repo.load_one(
+            filters=LoadGuestsFilters(guest_ids=[guest_id]),
+        )
+        guest_model = cast(Guests, guest_model)
         if guest_model is None:
             raise GuestNotFoundError(f"Guest with id {guest_id} not found")
         return guest_model.to_entity()
@@ -46,7 +49,7 @@ class StorageService:
     async def create_guest(self, guest_data: GuestData, db_commit: bool) -> GuestEntity:
         guest_entity = self.create_guest_entity(guest_data=guest_data)
         guest_model = self.guest_entity_to_model(entity=guest_entity)
-        guest_model = await self._guests_repo.save(guest=guest_model)
+        guest_model = await self._guests_repo.save(model=guest_model)
         if db_commit:
             await self._guests_repo.commit()
         return guest_model.to_entity()
