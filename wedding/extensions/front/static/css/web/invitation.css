@@ -21,7 +21,7 @@ p {
 }
 
 .paragraph img {
-    width: 30%;
+    width: 25%;
 }
 
 .p_close img {
@@ -32,32 +32,49 @@ p {
     transform: rotate(180deg);
 }
 
+.appeal {
+    margin-top: -10px;
+}
+
 .guests * {
     font-family: "french_kiss";
-    font-size: 80px;
+    font-size: 65px;
+    font-weight: 100;
     margin: -20px 0px;
 }
 
+.invite {
+    padding-top: 40px;
+}
+
 .family {
-    padding-top: 50px;
+    padding-top: 20px;
     padding-bottom: 50px;
 }
 
 .family * {
     font-family: "french_kiss";
-    font-size: 140px;
-    margin: -60px 0px;
+    font-weight: 100;
+    font-size: 110px;
+    margin: -40px 0px;
 }
 
 .wedding-date {
-    font-size: 40px;
-    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.wedding-date img{
+    width: 20%;
 }
 
 .schedule {
     display: flex;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap: 20px;
 }
 
 .schedule-part {
@@ -65,6 +82,9 @@ p {
     align-items: center;
     flex-direction: column;
     padding-bottom: 10px;
+    width: 600px;
+    border-radius: 25px;
+    border: 1px solid grey;
 }
 
 .schedule-part p {
@@ -124,6 +144,7 @@ p {
 }
 
 .yandex_form {
+    margin-top: 60px;
     display: flex;
     justify-content: center;
     height: fit-content;

@@ -1,6 +1,6 @@
 @font-face {
   font-family:"french_kiss";
-  src: url("/public/static/fonts/french_kiss.ttf") format("truetype");
+  src: url("/public/static/fonts/7.ttf") format("truetype");
 }
 
 @font-face {
@@ -11,7 +11,8 @@
 * {
   font-family: "helvetica";
   color: #000000;
-  font-size: 25px;
+  font-size: 30px;
+  font-weight: 900;
 }
 
 html {
@@ -25,7 +26,6 @@ body {
   grid-template-rows: 1fr auto;
   background-image:    url(../img/background.png);
   background-color: rgb(255, 255, 255);
-  backdrop-filter: blur(5px);
   background-size:     cover;
   background-repeat:   repeat-y;
   background-position: center center;
