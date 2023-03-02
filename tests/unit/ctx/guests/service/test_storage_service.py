@@ -15,8 +15,7 @@ from wedding.ctx.guests.entity.guest import GuestEntity, MaleEnum
 from wedding.ctx.guests.errors import GuestEntityError, GuestNotFoundEntityError, MultipleGuestsEntityError
 from wedding.ctx.guests.service.storage_service import StorageService
 from wedding.ctx.guests.special_codes import GUEST_MULTIPLE_FOUND, GUEST_NOT_FOUND
-from wedding.extensions.store.global_errors import StoreError
-from wedding.extensions.store.repo.guests.errors import MultipleGuestsFoundError
+from wedding.extensions.store.repo.guests.errors import GuestStoreError, MultipleGuestsFoundError
 from wedding.extensions.store.repo.guests.repo import LoadGuestsFilters
 
 
@@ -122,7 +121,7 @@ class TestStorageService:
     )
     async def test_get_guest_by_id__handle_errors(
         self,
-        raised_error: type[StoreError],
+        raised_error: type[GuestStoreError],
         expected_error: type[GuestEntityError],
         special_code: str,
         faker: Faker,
