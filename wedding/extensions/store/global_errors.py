@@ -10,11 +10,3 @@ class StoreError(Exception):
         if special_code is not None:
             self.special_code = special_code
         super().__init__(self.msg)
-
-
-class ConstraintError(StoreError):
-    pass
-
-
-class MultipleRowsFoundError(StoreError):
-    pass

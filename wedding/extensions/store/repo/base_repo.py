@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql.selectable import Select
 
 from wedding.extensions.store.database import Base, db_session
-from wedding.extensions.store.global_errors import ConstraintError, MultipleRowsFoundError, StoreError
+from wedding.extensions.store.global_errors import StoreError
 
 logger = logging.getLogger().getChild("base_repo")
 
@@ -55,7 +55,7 @@ class BaseRepo:
                 type(self).__name__,
                 exc_info=exc,
             )
-            raise ConstraintError(model=UNDEFINED_MODEL_NAME, msg=str(exc)) from exc
+            raise StoreError(model=UNDEFINED_MODEL_NAME, msg=str(exc)) from exc
         except DBAPIError as exc:
             logger.exception(
                 "Unexpected db error in repo %s",
@@ -82,7 +82,7 @@ class BaseRepo:
             yield
         except MultipleResultsFound as exc:
             logger.warning("Multiple results found for filters=%s", filters)
-            raise MultipleRowsFoundError(
+            raise StoreError(
                 model=UNDEFINED_MODEL_NAME,
                 msg=f"Multiple results found for {filters=}",
             ) from exc
@@ -102,7 +102,7 @@ class BaseRepo:
         :param model: модель, которую нужно сохранить/обновить
         :return: созданная/обновленная модель
         """
-        logger.info("Saving model %s", model)
+        logger.info("Saving model %s in repo %s", model, type(self).__name__)
         with self._handle_changes_errors():
             model = await self._db_session.merge(model)
             await self._db_session.flush()

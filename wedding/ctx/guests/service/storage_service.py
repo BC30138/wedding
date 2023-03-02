@@ -6,7 +6,8 @@ from fastapi import Depends
 
 from wedding.ctx.guests.dto.data import GuestData
 from wedding.ctx.guests.entity.guest import GuestEntity
-from wedding.ctx.guests.errors import GuestNotFoundError
+from wedding.ctx.guests.errors import GuestNotFoundEntityError, MultipleGuestsEntityError
+from wedding.extensions.store.repo.guests.errors import MultipleGuestsFoundError
 from wedding.extensions.store.repo.guests.models import Guests
 from wedding.extensions.store.repo.guests.repo import GuestsRepo, LoadGuestsFilters
 
@@ -43,6 +44,7 @@ class StorageService:
         :param entity: сущность гостя
         :return: модель гостя
         """
+        logger.info("Creating model from entity %s", entity)
         kwagrs: dict[str, Any] = {
             "first_name": entity.first_name,
             "middle_name": entity.middle_name,
@@ -65,12 +67,19 @@ class StorageService:
 
         :raises GuestNotFoundError: когда гость не найден
         """
-        guest_model = await self._guests_repo.load_one(
-            filters=LoadGuestsFilters(guest_ids=[guest_id]),
-        )
+        logger.info("Loading guest with id=%s", guest_id)
+        try:
+            guest_model = await self._guests_repo.load_one(
+                filters=LoadGuestsFilters(guest_ids=[guest_id]),
+            )
+        except MultipleGuestsFoundError as exc:
+            raise MultipleGuestsEntityError(
+                msg=f"By id={guest_id} found multiple results",
+            ) from exc
         guest_model = cast(Guests, guest_model)
         if guest_model is None:
-            raise GuestNotFoundError(f"Guest with id {guest_id} not found")
+            logger.info("Guest with id=%s not found", guest_id)
+            raise GuestNotFoundEntityError(f"Guest with id {guest_id} not found")
         return guest_model.to_entity()
 
     async def create_guest(self, guest_data: GuestData, db_commit: bool) -> GuestEntity:
@@ -81,6 +90,7 @@ class StorageService:
         :param db_commit: нужно ли произвести коммит в хранилище
         :return: созданная сущность гостя
         """
+        logger.info("Creating guest with data=%s", guest_data)
         guest_entity = self.create_guest_entity(guest_data=guest_data)
         guest_model = self.guest_entity_to_model(entity=guest_entity)
         guest_model = await self._guests_repo.save(model=guest_model)

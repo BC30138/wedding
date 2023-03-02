@@ -8,7 +8,7 @@ from sqlalchemy.future import select
 from sqlalchemy.sql.selectable import Select
 
 from wedding.extensions.store.repo.base_repo import BaseRepo, RepoLoadFilters
-from wedding.extensions.store.repo.guests.errors import GuestDBError, GuestsConstraintError, MultipleGuestsFoundError
+from wedding.extensions.store.repo.guests.errors import GuestsConstraintError, GuestStoreError, MultipleGuestsFoundError
 from wedding.extensions.store.repo.guests.models import Guests
 
 logger = logging.getLogger().getChild("guests_repo")
@@ -65,4 +65,4 @@ class GuestsRepo(BaseRepo):
             raise GuestsConstraintError(msg=str(exc)) from exc
         except DBAPIError as exc:
             logger.exception("Unexpected exception in Guests repo", exc_info=exc)
-            raise GuestDBError(msg=str(exc)) from exc
+            raise GuestStoreError(msg=str(exc)) from exc

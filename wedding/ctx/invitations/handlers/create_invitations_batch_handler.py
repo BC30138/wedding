@@ -5,7 +5,7 @@ from fastapi import Depends
 
 from wedding.ctx.invitations.dto.data import GroupData, GuestData, InvitationDataDTO
 from wedding.ctx.invitations.errors import GuestValidationError
-from wedding.ctx.invitations.special_codes import GUEST_MALE_VALIDATION_ERROR, GUEST_NAME_VALIDATION_ERROR
+from wedding.ctx.invitations.special_codes import INV_GUEST_MALE_VALIDATION_ERROR, INV_GUEST_NAME_VALIDATION_ERROR
 from wedding.ctx.invitations.use_case.create_invitations_batch import CreateInvitationsBatchUseCase
 from wedding.extensions.rest.invitations.schema import InvitationSchema
 from wedding.helpers.apyio_extender import StringIO
@@ -31,7 +31,7 @@ class CreateInvitationsBatchHandler:
         else:
             GuestValidationError(
                 msg=f"Wrong male: {male}",
-                special_code=GUEST_MALE_VALIDATION_ERROR,
+                special_code=INV_GUEST_MALE_VALIDATION_ERROR,
             )
 
         string_name = string_name.strip()
@@ -47,7 +47,7 @@ class CreateInvitationsBatchHandler:
         else:
             raise GuestValidationError(
                 msg=f"Incorrect full name format: {string_name}",
-                special_code=GUEST_NAME_VALIDATION_ERROR,
+                special_code=INV_GUEST_NAME_VALIDATION_ERROR,
             )
 
         return GuestData(

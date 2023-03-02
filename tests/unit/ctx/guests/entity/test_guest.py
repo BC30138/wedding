@@ -4,7 +4,7 @@ from faker import Faker
 
 from tests.unit.ctx.guests.factories import GuestEntityFactory
 from wedding.ctx.guests.entity.guest import GuestEntity, MaleEnum
-from wedding.ctx.guests.errors import GuestEntityValidationError
+from wedding.ctx.guests.errors import GuestValidationEntityError
 from wedding.ctx.guests.special_codes import GUEST_UNRECOGNIZED_MALE
 
 
@@ -50,7 +50,7 @@ class TestGuestEntity:
         male = faker.word()
 
         # Act
-        with pytest.raises(GuestEntityValidationError) as exc:
+        with pytest.raises(GuestValidationEntityError) as exc:
             GuestEntity.cast_male(value=male)
 
         # Asserts

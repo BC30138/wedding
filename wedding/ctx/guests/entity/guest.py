@@ -3,7 +3,7 @@ import logging
 from dataclasses import dataclass
 from enum import Enum
 
-from wedding.ctx.guests.errors import GuestEntityValidationError
+from wedding.ctx.guests.errors import GuestValidationEntityError
 from wedding.ctx.guests.special_codes import GUEST_UNRECOGNIZED_MALE
 
 logger = logging.getLogger().getChild("guest_entity")
@@ -41,7 +41,7 @@ class GuestEntity:
             return MaleEnum(value)
         except ValueError as exc:
             logger.warning("Unrecognized guest male=%s", value)
-            raise GuestEntityValidationError(
+            raise GuestValidationEntityError(
                 msg=f"Unrecognized guest male {value}",
                 special_code=GUEST_UNRECOGNIZED_MALE,
             ) from exc

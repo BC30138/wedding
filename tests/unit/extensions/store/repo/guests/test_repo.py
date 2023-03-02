@@ -9,7 +9,7 @@ from sqlalchemy.exc import DBAPIError, IntegrityError, MultipleResultsFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from tests.unit.extensions.store.repo.guests.factories import GuestsFactory, LoadGuestsFiltersFactory
-from wedding.extensions.store.repo.guests.errors import GuestDBError, GuestsConstraintError, MultipleGuestsFoundError
+from wedding.extensions.store.repo.guests.errors import GuestsConstraintError, GuestStoreError, MultipleGuestsFoundError
 from wedding.extensions.store.repo.guests.models import Guests
 from wedding.extensions.store.repo.guests.repo import GuestsRepo
 
@@ -83,7 +83,7 @@ async def test_handle_load_one_errors__errors(raised_exception, expected_excepti
     ("raised_exception", "expected_exception"),
     [
         (IntegrityError, GuestsConstraintError),
-        (DBAPIError, GuestDBError),
+        (DBAPIError, GuestStoreError),
     ],
 )
 async def test_handle_changes_errors__errors(raised_exception, expected_exception):
