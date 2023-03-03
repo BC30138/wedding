@@ -20,8 +20,8 @@ WORKDIR /code
 
 COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
 
-RUN apt-get update --allow-unauthenticated && \
-    apt-get -y install gcc
+RUN apt-get update --allow-insecure-repositories && \
+    apt-get -y install gcc --allow-insecure-repositories
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
