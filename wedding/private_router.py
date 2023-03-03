@@ -1,5 +1,6 @@
 from fastapi import APIRouter, FastAPI
 
+from wedding.extensions.rest.forms.private_router import router as forms_router
 from wedding.extensions.rest.groups.router import router as groups_router
 from wedding.extensions.rest.guests.router import router as guests_router
 from wedding.extensions.rest.invitations.router import router as invitations_router
@@ -20,5 +21,9 @@ def setup_private_router(app: FastAPI) -> None:
     router.include_router(
         router=invitations_router,
         prefix="/invitations",
+    )
+    router.include_router(
+        router=forms_router,
+        prefix="/forms",
     )
     app.include_router(router=router, prefix=PRIVATE_PATH)

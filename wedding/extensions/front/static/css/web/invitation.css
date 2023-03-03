@@ -237,3 +237,10 @@ p {
         color: white;
     }
 }
+
+.guest_form_error {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 25px;
+    color: red;
+}

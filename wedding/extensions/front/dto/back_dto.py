@@ -30,6 +30,7 @@ class GroupInfo:
     name: str
     is_couple: bool
     form_id: str
+    is_form_exists: bool
     guest_1: GuestInfo
     guest_2: GuestInfo | None
 
@@ -48,6 +49,7 @@ class GroupInfo:
         json_data: dict[str, Any],
         guest_1: GuestInfo,
         guest_2: GuestInfo | None,
+        is_form_exists: bool,
     ) -> "GroupInfo":
         return cls(
             id=json_data["id"],
@@ -56,4 +58,5 @@ class GroupInfo:
             guest_2=guest_2,
             is_couple=json_data["is_couple"],
             form_id=json_data["form_id"],
+            is_form_exists=is_form_exists,
         )

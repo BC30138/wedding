@@ -15,7 +15,7 @@ logger = logging.getLogger().getChild("guests_repo")
 
 
 class LoadGuestsFilters(RepoLoadFilters, total=False):
-    guest_ids: list[int] | None
+    guest_ids: list[int] | None  # список идентификаторов гостей
 
 
 class GuestsRepo(BaseRepo):
@@ -28,7 +28,7 @@ class GuestsRepo(BaseRepo):
         """
         Создает выборку для поиска гостей
 
-        :param guest_ids: список идентификаторов гостей
+        :param filters: фильтр для создания выборки гостей
         :return: выборка для поиска гостей
         """
         logger.info("Building query for filters=%s", filters)
@@ -56,7 +56,7 @@ class GuestsRepo(BaseRepo):
         Контекст для того, чтобы ловить ошибки при изменении/создании записи.
 
         :raises GuestsConstraintError: когда произошел конфликт в бд
-        :raises GuestDBError: нераспознанная ошибка бд
+        :raises GuestStoreError: нераспознанная ошибка бд
         """
         try:
             yield

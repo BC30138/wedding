@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from fastapi import Depends
 from httpx import AsyncClient
 
@@ -25,10 +27,12 @@ class GroupService:
             )
 
         guest_2 = await self.get_guest(guest_id=group_data["guest_2_id"])
+        is_form_exists = await self.is_form_exists(group_id=group_id)
         return GroupInfo.from_json(
             json_data=group_data,
             guest_1=guest_1,
             guest_2=guest_2,
+            is_form_exists=is_form_exists,
         )
 
     async def get_guest(self, guest_id: int | None) -> GuestInfo | None:
@@ -38,6 +42,15 @@ class GroupService:
         response = await self._rest_client.get(url_path)
         guest_data = response.json()["data"]
         return GuestInfo.from_json(json_data=guest_data)
+
+    async def is_form_exists(self, group_id: int | None) -> bool:
+        url_path = self._build_path(url_path="/forms/")
+        response = await self._rest_client.get(url_path, params={"group_id": group_id})
+        if response.status_code == HTTPStatus.OK:
+            return True
+        elif response.status_code == HTTPStatus.NOT_FOUND:
+            return False
+        raise NotImplementedError()
 
     def _build_path(self, url_path: str) -> str:
         return f"{self._base_path}{url_path}"

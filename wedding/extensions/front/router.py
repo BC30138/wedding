@@ -13,6 +13,7 @@ router = APIRouter(include_in_schema=False)
 async def get_invitation(  # type: ignore
     request: MobilityRequest,
     group_id: int,
+    update_form: bool = False,
     group_service: GroupService = Depends(GroupService),
 ):
     template_name = mobile_template_parser(request=request, template_name="invitation.html")
@@ -22,5 +23,6 @@ async def get_invitation(  # type: ignore
         {
             "request": request,
             "group": group,
+            "update_form": update_form,
         },
     )

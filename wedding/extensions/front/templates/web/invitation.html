@@ -11,6 +11,9 @@
     {% set guests_names = group.guest_1.full_name %}
 {% endif %}
 
+{% block loaded_scripts %}
+<script src="/public/static/scripts/invitation.js"></script>
+{% endblock %}
 
 {% block title %}
 {% set title_text = "Приглашение на свадьбу Екатерины и Антона" %}
@@ -114,42 +117,50 @@
     <img src="/public/static/img/break_line.png" >
 </div>
 
-
 <div class="guest_form">
     <p class="guest_form_title">
         Опрос
     </p>
-    <p class="guest_form_desc">
-        Здесь мы хотим собрать немного информации о наших гостях, чтобы организовать все наиболее комфортно.
-    </p>
-    <div class="guest_form_question">
-        <p class="question"><span style="color: red">*</span>Главный вопрос: вы придете? :)</p>
-        <div class="answer one_checkbox">
-            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Да</label>
-            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Нет</label>
+    {% if group.is_form_exists and not update_form%}
+        <p class="guest_form_desc">
+            Спасибо за ответы!
+        </p>
+        <input type="submit" value="Изменить ответы" name="save" id="restart-form-button" class="submit-form">
+    {% else %}
+        <p class="guest_form_desc">
+            Здесь мы хотим собрать немного информации о наших гостях, чтобы организовать все наиболее комфортно.
+        </p>
+        <div class="guest_form_question">
+            <p class="question"><span style="color: red">*</span>Главный вопрос: вы придете? :)</p>
+            <div class="answer one_checkbox" id="answer_attend">
+                <label><input type="checkbox" class="one_check" name="checkbox[1]" id="attend_yes"/>Да</label>
+                <label><input type="checkbox" class="one_check" name="checkbox[1]" id="attend_no"/>Нет</label>
+            </div>
         </div>
-    </div>
-    <div class="guest_form_question">
-        <p class="question">Если вы будете с парой, впишите, пожалуйста ее/его имя</p>
-        <div class="answer">
-            <input type="text" class="answer_name" placeholder="ФИО"/>
+        {% if not group.is_couple %}
+        <div class="guest_form_question">
+            <p class="question">Если вы будете с парой, впишите, пожалуйста ее/его имя</p>
+            <div class="answer">
+                <input type="text" class="answer_name" placeholder="ФИО" id="plus_name"/>
+            </div>
         </div>
-    </div>
-    <div class="guest_form_question">
-        <p class="question"><span style="color: red">*</span>Нужен ли тебе трансфер до загородного клуба?</p>
-        <div class="answer one_checkbox">
-            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Да</label>
-            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Нет</label>
+        {% endif %}
+        <div class="guest_form_question">
+            <p class="question"><span style="color: red">*</span>Нужен ли вам трансфер до загородного клуба?</p>
+            <div class="answer one_checkbox" id="answer_transfer">
+                <label><input type="checkbox" class="one_check" name="checkbox[2]" id="transfer_yes"/>Да</label>
+                <label><input type="checkbox" class="one_check" name="checkbox[2]" id="transfer_no"/>Нет</label>
+            </div>
         </div>
-    </div>
-    <div class="guest_form_question">
-        <p class="question"><span style="color: red">*</span>Останетесь в загородном клубе на ночь?</p>
-        <div class="answer one_checkbox">
-            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Да</label>
-            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Нет</label>
+        <div class="guest_form_question">
+            <p class="question"><span style="color: red">*</span>Останетесь в загородном клубе на ночь?</p>
+            <div class="answer one_checkbox" id="answer_sleepover">
+                <label><input type="checkbox" class="one_check" name="checkbox[3]" id="sleepover_yes"/>Да</label>
+                <label><input type="checkbox" class="one_check" name="checkbox[3]" id="sleepover_no"/>Нет</label>
+            </div>
         </div>
-    </div>
-    <input type="submit" value="Отправить" name="save" id="submit-form" class="submit-form">
+        <input type="submit" value="Отправить" name="save" id="submit-form" class="submit-form">
+    {% endif %}
 </div>
 
 {% endblock %}
