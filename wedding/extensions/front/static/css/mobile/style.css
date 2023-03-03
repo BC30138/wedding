@@ -1,0 +1,33 @@
+@font-face {
+  font-family:"french_kiss";
+  src: url("/public/static/fonts/7.ttf") format("truetype");
+}
+
+@font-face {
+  font-family:"helvetica";
+  src: url("/public/static/fonts/helvetica.ttf") format("truetype");
+}
+
+* {
+  font-family: "helvetica";
+  color: #000000;
+  font-size: 65px;
+  font-weight: 900;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background-image:    url(../../img/background.png);
+  background-color: rgb(255, 255, 255);
+  background-size:     cover;
+  background-repeat:   repeat-y;
+  background-position: center center;
+  background-attachment:fixed;
+}

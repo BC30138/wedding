@@ -31,7 +31,7 @@
 
 
 {% block style %}
-{{ super() }}
+<link rel='stylesheet' href="/public/static/css/web/style.css">
 <link rel='stylesheet' href="/public/static/css/web/invitation.css">
 {% endblock %}
 
@@ -114,9 +114,42 @@
     <img src="/public/static/img/break_line.png" >
 </div>
 
-<div class="yandex_form">
-    <script src="https://yastatic.net/s3/frontend/forms/_/embed.js"></script>
-    <iframe src="https://forms.yandex.ru/u/{{ group.form_id }}/?iframe=1"
-            frameborder="0" name="ya-form-63e51085e010db03fcf56c23" width="650"></iframe>
+
+<div class="guest_form">
+    <p class="guest_form_title">
+        Опрос
+    </p>
+    <p class="guest_form_desc">
+        Здесь мы хотим собрать немного информации о наших гостях, чтобы организовать все наиболее комфортно.
+    </p>
+    <div class="guest_form_question">
+        <p class="question"><span style="color: red">*</span>Главный вопрос: вы придете? :)</p>
+        <div class="answer one_checkbox">
+            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Да</label>
+            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Нет</label>
+        </div>
+    </div>
+    <div class="guest_form_question">
+        <p class="question">Если вы будете с парой, впишите, пожалуйста ее/его имя</p>
+        <div class="answer">
+            <input type="text" class="answer_name" placeholder="ФИО"/>
+        </div>
+    </div>
+    <div class="guest_form_question">
+        <p class="question"><span style="color: red">*</span>Нужен ли тебе трансфер до загородного клуба?</p>
+        <div class="answer one_checkbox">
+            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Да</label>
+            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Нет</label>
+        </div>
+    </div>
+    <div class="guest_form_question">
+        <p class="question"><span style="color: red">*</span>Останетесь в загородном клубе на ночь?</p>
+        <div class="answer one_checkbox">
+            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Да</label>
+            <label><input type="checkbox" class="one_check" value="1" name="fooby[1][]" />Нет</label>
+        </div>
+    </div>
+    <input type="submit" value="Отправить" name="save" id="submit-form" class="submit-form">
 </div>
+
 {% endblock %}
