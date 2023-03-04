@@ -10,21 +10,21 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - env/.env.docker.local
+      - ./env/.env.docker.local
     volumes:
       - ./dbdata:/var/lib/postgresql/data
 
   weddingweb:
     container_name: weddingweb
     build:
-      context: docker/local
+      context: .
       dockerfile: ./docker/web/Dockerfile
     expose:
       - "8000"
     ports:
       - 8000:8000
     env_file:
-      - env/.env.docker.local
+      - ./env/.env.docker.local
     restart: always
     depends_on:
       - db
