@@ -10,27 +10,21 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - .env
+      - env/.env.docker.local
     volumes:
-      - ${DB_VOLUME_PATH}:/var/lib/postgresql/data
-    networks:
-      - bc30138-net
+      - ./dbdata:/var/lib/postgresql/data
 
   weddingweb:
     container_name: weddingweb
     build:
-      context: .
+      context: docker/local
       dockerfile: ./docker/web/Dockerfile
     expose:
       - "8000"
+    ports:
+      - 8000:8000
     env_file:
-      - .env
+      - env/.env.docker.local
     restart: always
     depends_on:
       - db
-    networks:
-      - bc30138-net
-
-networks:
-  bc30138-net:
-    external: true
