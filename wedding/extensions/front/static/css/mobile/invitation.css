@@ -219,22 +219,22 @@ p {
 }
 
 .one_check {
+    box-shadow: 0 0 0 2px #ddd;;
     margin-right: 10px;
     width: 5vw;
     height: 5vw;
     background-color: white;
     border-radius: 50%;
     vertical-align: middle;
-    outline: solid 0.5vw #ddd;
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
-    transition: all 0.1s ease;
+    transition: none;
 }
 
 .one_check:checked {
     background-color: black;
-    border: 1vw solid #ffeba0;
+    border: 1vw solid #fae6b0;
 }
 
 .submit-form {

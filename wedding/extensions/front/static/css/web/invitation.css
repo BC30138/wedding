@@ -203,22 +203,25 @@ p {
     gap: 20px;
 }
 
+.one_checkbox label {
+    cursor: pointer;
+}
+
 .one_check {
+    box-shadow: 0 0 0 2px #ddd;;
     width: 15px;
     height: 15px;
     background-color: white;
     border-radius: 50%;
     vertical-align: middle;
-    outline: solid 1px #ddd;
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
-    transition: all 0.1s ease;
 }
 
 .one_check:checked {
     background-color: black;
-    border: 4px solid #ffeba0;
+    border: 4px solid #fae6b0;
 }
 
 .submit-form {
