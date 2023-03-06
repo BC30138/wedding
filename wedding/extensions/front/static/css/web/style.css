@@ -21,7 +21,7 @@ body {
   width: 100vw;
   display: grid;
   grid-template-rows: 1fr auto;
-  background-color: rgb(255, 255, 255);
+  background-color: #f2cbce;
 }
 
 #background_wrap {
