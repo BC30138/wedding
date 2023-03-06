@@ -3,3 +3,9 @@
 <link rel='stylesheet' href="/public/static/css/mobile/style.css">
 <link rel='stylesheet' href="/public/static/css/mobile/invitation.css">
 {% endblock %}
+
+
+{% block loaded_scripts %}
+{{ super() }}
+<div id="background_wrap"></div>
+{% endblock %}

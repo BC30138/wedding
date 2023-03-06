@@ -119,7 +119,7 @@ p {
 }
 
 .schedule-title {
-    font-weight: bold;
+    font-weight: 500;
     padding-bottom: 10px;
     width: 60%;
     margin: 10px auto;
@@ -175,7 +175,7 @@ p {
 
 .guest_form_title {
     width: fit-content;
-    font-weight: bold;
+    font-weight: 500;
     border-radius: 25px;
     border: 2px solid;
     padding: 20px;
