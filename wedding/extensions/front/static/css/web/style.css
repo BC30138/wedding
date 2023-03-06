@@ -22,20 +22,25 @@ body {
   display: grid;
   grid-template-rows: 1fr auto;
   background-color: #f2cbce;
+  background-size:     cover;
+  background-repeat:   repeat-y;
+  background-position: center center;
 }
 
-#background_wrap {
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-image: url(../../img/background.png);
-    background-attachment: scroll;
-    background-size:     cover;
-    background-repeat:   repeat-y;
-    background-position: center center;
+body:after{
+      content:"";
+      position:fixed; /* stretch a fixed position to the whole screen */
+      top:0;
+      height:100vh; /* fix for mobile browser address bar appearing disappearing */
+      left:0;
+      right:0;
+      z-index:-1; /* needed to keep in the background */
+      background-image: url(../../img/background.png);
+      background-position: center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
 }
 
 .modal {
