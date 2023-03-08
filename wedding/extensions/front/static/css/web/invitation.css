@@ -5,7 +5,7 @@ p {
 .wrapper {
     display: flex;
     justify-content: center;
-    padding-bottom: 40px;
+    padding-bottom: 80px;
     max-width: 100%;
 }
 
@@ -16,8 +16,14 @@ p {
 }
 
 .collage {
+    padding-top: 80px;
+    width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.collage img {
+    width: 50%;
 }
 
 .paragraph {

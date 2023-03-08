@@ -23,6 +23,7 @@ p {
 }
 .collage img {
     width: 90%;
+    margin-bottom: -80px;
 }
 
 .paragraph {
