@@ -27,12 +27,15 @@ class GroupsRepo:
         self,
         group_id: int | None = None,
         name: int | None = None,
+        sort: bool = False,
     ) -> Select:
         query = select(Groups)
         if group_id is not None:
             query = query.filter(Groups.id == group_id)
         if name is not None:
             query = query.filter(Groups.name == name)
+        if sort:
+            query = query.order_by(Groups.id.asc())
         return query
 
     async def load_one(self, **kwargs: Any) -> Groups | None:
@@ -42,6 +45,7 @@ class GroupsRepo:
         return cast(Groups, result)
 
     async def load_all(self, **kwargs: Any) -> list[Groups]:
+        kwargs["sort"] = True
         query = self.load_query(**kwargs)
         result = await self._db_session.execute(query)
         result = result.scalars()
