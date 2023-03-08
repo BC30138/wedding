@@ -452,21 +452,6 @@ lint = ["flake8"]
 test = ["PyHamcrest", "pytest", "pytest-cov"]
 
 [[package]]
-name = "flake8-mutable"
-version = "1.2.0"
-description = "mutable defaults flake8 extension"
-category = "dev"
-optional = false
-python-versions = "*"
-files = [
-    {file = "flake8-mutable-1.2.0.tar.gz", hash = "sha256:ee9b77111b867d845177bbc289d87d541445ffcc6029a0c5c65865b42b18c6a6"},
-    {file = "flake8_mutable-1.2.0-py2-none-any.whl", hash = "sha256:38fd9dadcbcda6550a916197bc40ed76908119dabb37fbcca30873666c31d2d5"},
-]
-
-[package.dependencies]
-flake8 = "*"
-
-[[package]]
 name = "flake8-pie"
 version = "0.16.0"
 description = "A flake8 extension that implements misc. lints"
@@ -1550,4 +1535,4 @@ test = ["covdefaults (>=2.2.2)", "coverage (>=7.1)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "24327b2f35ffa47a149c4784eb70473f63ea9f78d7154006435390bdf269c911"
+content-hash = "831bede6d672d62fa82b2b2119cdf8720e73feb206257dcc8dd42a38e4b5c4e3"
