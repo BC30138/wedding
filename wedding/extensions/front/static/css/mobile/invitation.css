@@ -163,6 +163,20 @@ p {
     margin: 20px;
 }
 
+.gifts_ideas {
+    margin-bottom: 20px;
+}
+
+.gifts_ideas p {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.emoji {
+  font-size: 100px;
+  line-height: 2;
+}
+
 .guest_form {
     display: flex;
     flex-direction: column;

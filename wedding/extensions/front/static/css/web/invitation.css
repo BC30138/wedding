@@ -156,6 +156,16 @@ p {
     padding: 10px;
 }
 
+.gifts_ideas p {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.emoji {
+  font-size: 40px;
+  line-height: 2;
+}
+
 .guest_form {
     margin-top: 40px;
     display: flex;
