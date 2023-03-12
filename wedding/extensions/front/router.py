@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse
 
+from wedding.cfg import app_configuration
 from wedding.extensions.front.helpers.mobility import MobilityRequest, mobile_template_parser, mobility_manager
 from wedding.extensions.front.services.group_service import GroupService
 from wedding.extensions.front.templates_storage import templates_storage
@@ -24,5 +25,6 @@ async def get_invitation(  # type: ignore
             "request": request,
             "group": group,
             "update_form": update_form,
+            "static_url": app_configuration.static_cdn,
         },
     )

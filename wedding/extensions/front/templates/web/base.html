@@ -3,10 +3,16 @@
 <head>
     {% block head %}
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="/public/static/img/favicon.svg">
+    <link rel="shortcut icon" href="{{ static_url }}/public/static/img/favicon.svg">
     {% endblock %}
     {% block title %}{% endblock %}
-    {% block style %} {% endblock %}
+    <style media="screen, print">
+        @font-face {
+              font-family:"french_kiss";
+              src: url("{{ static_url }}/public/static/fonts/7.ttf") format("truetype");
+        }
+    </style>
+    {% block style %}{% endblock %}
     {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>

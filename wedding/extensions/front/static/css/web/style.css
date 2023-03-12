@@ -1,7 +1,4 @@
-@font-face {
-  font-family:"french_kiss";
-  src: url("/public/static/fonts/7.ttf") format("truetype");
-}
+
 
 * {
   font-family: helvetica, sans-serif;

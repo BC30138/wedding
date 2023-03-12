@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 class AppConfiguration:
     database_url: str
     async_database_url: str
+    static_cdn: str = ""
 
 
 def make_app_configuration() -> AppConfiguration:
@@ -21,6 +22,7 @@ def make_app_configuration() -> AppConfiguration:
     return AppConfiguration(
         database_url=str(database_url.geturl()),
         async_database_url=str(async_database_url.geturl()),
+        static_cdn=env_content.get("STATIC_URL", ""),
     )
 
 

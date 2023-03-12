@@ -12,7 +12,7 @@
 {% endif %}
 
 {% block loaded_scripts %}
-<script src="/public/static/scripts/invitation.js"></script>
+<script src="{{ static_url }}/public/static/scripts/invitation.js"></script>
 {% endblock %}
 
 {% block title %}
@@ -25,27 +25,27 @@
 <meta name="description" content="{{description}}">
 <meta property="og:description" content="{{description}}">
 <meta name="twitter:description" content="{{description}}">
-<meta name="image" content="https://свадьбакатяантон.рф/public/static/img/og.png">
-<meta property="og:image" content="https://свадьбакатяантон.рф/public/static/img/og.png">
-<meta name="twitter:image" content="https://свадьбакатяантон.рф/public/static/img/og.png">
+<meta name="image" content="{{ static_url }}/public/static/img/og.png">
+<meta property="og:image" content="{{ static_url }}/public/static/img/og.png">
+<meta name="twitter:image" content="{{ static_url }}/public/static/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="url" content="https://свадьбакатяантон.рф/">
 {% endblock %}
 
 
 {% block style %}
-<link rel='stylesheet' href="/public/static/css/web/style.css">
-<link rel='stylesheet' href="/public/static/css/web/invitation.css">
+<link rel='stylesheet' href="{{ static_url }}/public/static/css/web/style.css">
+<link rel='stylesheet' href="{{ static_url }}/public/static/css/web/invitation.css">
 {% endblock %}
 
 
 {% block content %}
 <div class="collage">
-    <img src="/public/static/img/collage_final.png" >
+    <img src="{{ static_url }}/public/static/img/collage_final.png" >
 </div>
 
 <div class="paragraph p_open">
-    <img src="/public/static/img/break_line.png" >
+    <img src="{{ static_url }}/public/static/img/break_line.png" >
 </div>
 
 <div class="greeting">
@@ -64,7 +64,7 @@
 </div>
 
 <div class="paragraph p_close">
-    <img src="/public/static/img/break_line.png" >
+    <img src="{{ static_url }}/public/static/img/break_line.png" >
 </div>
 
 <div class="invite">
@@ -76,12 +76,12 @@
     </div>
 
     <div class="wedding-date">
-        <img src="/public/static/img/date.png" >
+        <img src="{{ static_url }}/public/static/img/date.png" >
     </div>
 </div>
 
 <div class="paragraph p_open">
-    <img src="/public/static/img/break_line.png" >
+    <img src="{{ static_url }}/public/static/img/break_line.png" >
 </div>
 
 <div class="schedule">
@@ -89,7 +89,7 @@
         <p class="timing"> 11:40 </p>
         <p class="schedule-title">Торжественная регистрация</p>
         <a class="address" href="https://go.2gis.com/qbj8u4" target="_blank">
-            <img src="/public/static/img/location.svg" >
+            <img src="{{ static_url }}/public/static/img/location.svg" >
             <div class="address-text">
                 <p>Дворец бракосочетания №2</p>
                 <p>Санкт-Петербург, ул. Фурштатская, д. 52</p>
@@ -104,7 +104,7 @@
         <p class="timing"> 16:00 </p>
         <p class="schedule-title">Праздничный банкет</p>
         <a class="address" href="https://go.2gis.com/rtlgy" target="_blank">
-            <img src="/public/static/img/location.svg" >
+            <img src="{{ static_url }}/public/static/img/location.svg" >
             <div class="address-text">
                 <p>Загородный клуб "Иваново подворье"</p>
                 <p>пос. Токсово, ул. Разъезжая, д. 13</p>
@@ -114,7 +114,7 @@
 </div>
 
 <div class="paragraph p_close">
-    <img src="/public/static/img/break_line.png" >
+    <img src="{{ static_url }}/public/static/img/break_line.png" >
 </div>
 
 <div class="guest_form">
